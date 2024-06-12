@@ -8,7 +8,7 @@ const RQUsers = () => {
         return response.data;
     }
     return useQuery({
-        queryKey: "users",
+        queryKey: ["users"],
         queryFn: fetchUsers,
     })
 }
