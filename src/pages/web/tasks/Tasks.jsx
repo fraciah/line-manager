@@ -1,7 +1,7 @@
 
 const Tasks = () => {
   return (
-    <div>
+    <div className="page-container">
       Tasks
     </div>
   )

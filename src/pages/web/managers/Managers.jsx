@@ -1,7 +1,7 @@
 
 const Managers = () => {
   return (
-    <div>
+    <div className="page-container">
       Managers
     </div>
   )

@@ -1,16 +1,28 @@
 import RQUsers from "../../../RQ/RQUsers";
+import Table from "../../../components/Table";
 
 const Users = () => {
   const { data: users } = RQUsers();
 
+  const columns = [
+    {
+      name: "ID",
+      selector: (row) => row.id,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.name,
+    },
+    {
+      name: "Email",
+      selector: (row) => row.email,
+    },
+  ];
+
   return (
-    <div>
+    <div className="page-container">
       <h1>Users</h1>
-      <div>
-        {users && users.map((user) => (
-          <div key={user.id}>{user.name}</div>
-        ))}
-      </div>
+      <Table columns={columns} data={users} />
     </div>
   )
 }
