@@ -1,16 +1,100 @@
-$primary-color: #181818;
-$primary-hover-color: #0056b3;
-$danger-color: #dc3545;
-$fade-white: white;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+$text-color: #181818;
+$primary-color: #6237A0;
+$primary-hover-color: #28104E;
+$danger-color: #b41928;
+$fade-white: #ebebeb;
 
 * {
   margin: 0;
   padding: 0;
+  font-family: "Lato", sans-serif;
   box-sizing: border-box;
 }
+
 a {
-  color: $primary-color;
+  color: $text-color;
   text-decoration: none;
+}
+
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  font-weight: 600;
+  // font-size: 0.8rem;
+  // text-transform: uppercase;
+  box-shadow: 0 0 0.5rem #00000030;
+
+  .nav-icon {
+    display: none;
+  }
+
+  .logo-holder {
+    display: flex;
+    align-items: center;
+    
+    img{
+        max-width: 100%;
+        height: 70px;
+    }
+  }
+
+  .nav-items {
+    padding: 1rem 0;
+    display: flex;
+    gap: 2rem;
+    
+    .nav-item {
+      text-decoration: none;
+      
+      &.inactive {
+        color: $text-color;
+            
+        &:hover {
+          color: $primary-color;
+        }
+      }
+        
+      &.active {
+        color: $primary-color;
+          
+        &:hover {
+            color: $text-color;
+        }
+      }
+    }
+  }
+
+  .auth-links {
+    display: flex;
+    gap: 2rem;  
+    
+    .auth-link {
+      border-radius: 10px;
+      padding: 0.8rem 1.1rem;
+
+      &.sign-up {
+        color: $primary-color;
+
+        &:hover {
+          color: $text-color;
+        }
+      }
+
+      &.login {
+        background: $primary-color;
+        color: white;
+
+        &:hover {
+          background: $primary-hover-color;
+        }
+      }
+    }
+  }
 }
 
 .main-container {
@@ -18,7 +102,7 @@ a {
     width: 80px;
     min-width: 80px;
     height: 100vh;
-    background-color: #ECEEF0;
+    background-color: white;
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -47,8 +131,8 @@ a {
       box-shadow: 0 0 0.5rem #00000030;
       background: linear-gradient(
         to right,
-        $primary-color,
-        $primary-hover-color
+        $text-color,
+        $primary-color
       );
       display: flex;
       align-items: center;
@@ -74,10 +158,10 @@ a {
       width: 100%;
       height: 100px;
       display: flex;
-      // pointer-events: none;
       justify-content: flex-start;
       padding: 1rem 0;
       position: relative;
+      border-right: 1px solid #BBBBBB;
 
       img {
         position: absolute;
@@ -94,6 +178,7 @@ a {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      border-right: 1px solid #BBBBBB;
 
       .sidelinks {
         width: 100%;
@@ -105,7 +190,7 @@ a {
           display: flex;
           padding: 1rem;
           cursor: pointer;
-          color: $primary_color;
+          color: $text-color;
 
           .icon {
             width: 100%;
@@ -134,7 +219,7 @@ a {
 
           &.active {
             font-weight: 500;
-            color: $primary-hover-color;
+            color: $primary-color;
             background-color: $fade-white;
           }
         }
@@ -146,7 +231,6 @@ a {
     width: calc(100% - (80px + 2%));
     position: fixed;
     right: 0;
-    background-color: $fade-white;
     min-height: 100vh;
     transition: all 200ms ease-in-out;
     overflow-y: auto;
@@ -156,10 +240,66 @@ a {
       width: calc(100% - 17%);
     }
 
+
     .page-container {
       width: 100%;
       display: flex;
       flex-direction: column;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {}
+
+@media screen and (max-width: 728px) {
+  .navbar {
+    // background: rgb(176, 229, 176);
+    padding: 0.3rem 0;
+    flex-direction: column;
+
+    .nav-icon {
+      display: block;
+      position: absolute;
+      top: 10px;
+      right: 10px;                
+    }
+
+    .logo-holder {
+      img {
+        height: 34px;
+      }
+    }
+      
+    .nav-items {
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 0.5rem;
+      border-top: 1px solid #BBBBBB;
+      gap: 1rem;
+
+      &.hide {
+          display: none;
+      }
+
+      &.show {
+        display: flex;
+      }
+    } 
+    
+    .auth-links {
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+
+      &.hide {
+        display: none;
+      }
+
+      &.show {
+        display: flex;
+      }
     }
   }
 }
