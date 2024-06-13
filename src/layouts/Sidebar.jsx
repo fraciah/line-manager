@@ -2,8 +2,7 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BookCheck, Boxes, ChevronRight, Contact, Lock, UserCheck, Users } from "lucide-react";
-import large_logo from "../assets/images/large_logo.png";
-import small_logo from "../assets/images/small_logo.png";
+import logo from "../assets/images/logo.png";
 
 const Sidebar = ({ toggleSideBar, hideSidebar }) => {
     const navigate = useNavigate();
@@ -52,16 +51,16 @@ const Sidebar = ({ toggleSideBar, hideSidebar }) => {
             >
                 <ChevronRight className="i"/>
             </div>
-            {hideSidebar && (
+            {/* {hideSidebar && (
                 <div className="logo">
-                    <img src={large_logo} alt="logo" />
+                    <img src={logo} alt="logo" />
                 </div>
             )}
-            {!hideSidebar && (
-                <div className="logo">
-                    <img src={small_logo} alt="logo" />
-                </div>
-            )}
+            {!hideSidebar && ( */}
+            <div className="logo">
+                <img src={logo} alt="logo" />
+            </div>
+            {/* // )} */}
             <div className="sidebar-links">
                 <div className="sidelinks">
                     {navLinks?.map((link, linkIndex) => (

@@ -13,51 +13,41 @@ export const routes = [
     {
         path: "/",
         element: Home,
-        // auth: false,
     },
     {
         path: "/signup",
         element: SignUp,
-        // auth: false,
     },
     {
         path: "/login",
         element: Login,
-        // auth: false,
     },
     {
         path: "/users",
         element: Users,
-        // auth: true,
     },
     {
         path: "/users/:id/view",
         element: UserView,
-        // auth: true,
     },
     {
         path: "/managers",
         element: Managers,
-        // auth: true,
     },
     {
         path: "/employees",
         element: Employees,
-        // auth: true,
     },
     {
         path: "/tasks",
         element: Tasks,
-        // auth: true,
     },
     {
         path: "/groups",
         element: Groups,
-        // auth: true,
     },
     {
         path: "*",
         element: Error404,
-        // auth: false,
     },
 ];

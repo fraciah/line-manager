@@ -20,7 +20,7 @@ export default Table;
 const customStyles = {
     headRow: {
       style: {
-        background: "#0056b3",
+        background: "#6237A0",
         color: "white",
       },
     },
