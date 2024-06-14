@@ -40,12 +40,7 @@ const Users = () => {
   return (
     <div className="page-container">
       <div className="header">
-        <div className="header-title">
-          <div className="title">Admin View</div>
-          <ChevronRight />
-          <Link to="/users" className="title page">Users</Link>
-        </div>
-        <div className="title">Hello User</div>
+        <Link to="/users" className="page-title">Users</Link>
       </div>
       <Table 
         columns={columns} 

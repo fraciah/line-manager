@@ -47,13 +47,10 @@ const UserView = () => {
       <div className="header">
         {error && <div className="">{error}</div>}
         <div className="header-title">
-          <div className="title">Admin View</div>
+          <Link to="/users" className="page-title title">Users</Link>
           <ChevronRight />
-          <Link to="/users" className="title page">Users</Link>
-          <ChevronRight />
-          <div className="title">User</div>
+          <div className="page-title">User</div>
         </div>
-        <div className="title">Hello {userDoc?.username}</div>
       </div>
 
       <div className="user-holder">
