@@ -29,13 +29,23 @@ const fetchAndSyncUsers = async () => {
                     const userCredential = await createUserWithEmailAndPassword(auth, user.email, defaultPassword);
                     const authUser = userCredential.user;
 
-                    //adding two extra fields to new user details
-                    const userDoc = doc(db, "users", authUser.uid);
-                    await setDoc(userDoc, {
+                    //adding three extra fields to new user details
+                    const userDocRef = doc(db, "users", authUser.uid);
+                    const employeeDocRef = doc(db, "employees", authUser.uid);
+
+                    await setDoc(userDocRef, {
                         ...user,
                         isAdmin: false,
-                        role: "Employee"
+                        role: "Employee",
+                        isActive: true,
                     });
+
+                    await setDoc(employeeDocRef, {
+                        ...user,
+                        isAdmin: false,
+                        role: "Employee",
+                        isActive: true,
+                    })
 
                     console.log(`Added user: ${user.email}`);
                 } catch (error) {

@@ -1,7 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import Table from "../../../components/Table";
-import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
-import useAuth from "../../../hooks/useAuth";
 import useCollection from "../../../hooks/useCollection";
 import fetchAndSyncUsers from "../../../utilities/fetchAndSyncUsers";
 import { useEffect } from "react";
@@ -9,13 +7,12 @@ import { ChevronRight, Shield } from "lucide-react";
 
 const Users = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const { data: usersCollection } = useCollection("users");
-  const { document, loading } = useFireStoreDoc("users", user?.uid);
 
   // useEffect(() => {
   //   fetchAndSyncUsers();
-  // }, []); -users already fetched and synced with firebase
+  // }, []); 
+  //users already fetched and synced with firebase
 
   const userClicked = (row) => {
     navigate(`/users/${row.id}/view`);
@@ -33,6 +30,10 @@ const Users = () => {
     {
       name: "Role",
       selector: (row) => row.role,
+    },
+    {
+      name: "Is Active",
+      selector: (row) => row.isActive? "Yes" : "No",
     },
   ];
 

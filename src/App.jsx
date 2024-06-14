@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { routes } from "./utilities/routes";
 import Container from "./layouts/Container";
 import Navbar from "./layouts/Navbar";
+import Footer from "./layouts/Footer";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                   element={<>
                             <Navbar /> 
                             <route.element />
+                            <Footer />
                            </>
                           } 
             />) : (

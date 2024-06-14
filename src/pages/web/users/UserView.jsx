@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import { useState } from "react";
 import { db } from '../../../firebase';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { ChevronRight } from "lucide-react";
 
 const UserView = () => {
@@ -28,7 +28,11 @@ const UserView = () => {
         role: "Manager",
       });
 
-      alert("User role updated successfully");
+      //remove new manager from employees collection
+      const removeRef = doc(db, "employees", id)
+      await deleteDoc(removeRef);
+
+      alert("User successfully changed to manager!");
     }
     catch (error) {
       setError(error.message);
