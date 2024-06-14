@@ -20,12 +20,12 @@ const Users = () => {
 
   const columns = [
     {
-      name: "Email",
-      selector: (row) => row.email,
+      name: "Name",
+      selector: (row) => row.name,
     },
     {
-      name: "Phone Number",
-      selector: (row) => row.phone,
+      name: "Email",
+      selector: (row) => row.email,
     },
     {
       name: "Role",

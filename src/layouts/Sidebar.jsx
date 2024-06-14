@@ -37,15 +37,15 @@ const Sidebar = ({ toggleSideBar, hideSidebar }) => {
             view : ["Admin", "Manager"],
         },
         {
-            path: "/tasks",
-            icon: <BookCheck />,
-            title: "Tasks",
-            view : ["Admin", "Manager", "Employee"],
-        },
-        {
             path: "/groups",
             icon: <Boxes />,
             title: "Groups",
+            view : ["Admin", "Manager", "Employee"],
+        },
+        {
+            path: "/tasks",
+            icon: <BookCheck />,
+            title: "Tasks",
             view : ["Admin", "Manager", "Employee"],
         },
     ];

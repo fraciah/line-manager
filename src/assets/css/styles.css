@@ -203,6 +203,8 @@ a {
 .main-container .main-content .page-container .header {
   width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 1rem 0;
 }
 .main-container .main-content .page-container .header .header-title {
