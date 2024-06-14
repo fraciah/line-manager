@@ -8,6 +8,7 @@ import Tasks from "../pages/web/tasks/Tasks";
 import Groups from "../pages/web/groups/Groups";
 import Error404 from "../pages/errors/Error404";
 import UserView from "../pages/web/users/UserView";
+import Profile from "../pages/web/Profile";
 
 export const routes = [
     {
@@ -21,6 +22,10 @@ export const routes = [
     {
         path: "/login",
         element: Login,
+    },
+    {
+        path: "/profile",
+        element: Profile,
     },
     {
         path: "/users",

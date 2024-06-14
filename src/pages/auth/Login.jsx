@@ -20,7 +20,7 @@ const Login = () => {
       localStorage.setItem("token", user.accessToken);
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("isLoggedIn", "true");
-      navigate("/users");
+      navigate("/profile");
     } 
     catch (error) {
       console.log(error);
