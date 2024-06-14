@@ -265,20 +265,9 @@ a {
       .header {
         width: 100%;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
         // background: pink;
         padding: 1rem 0;
 
-        .title {
-          font-size: 1.2rem;
-          color: $primary-hover-color;
-        }
-        .page {
-          &:hover {
-            text-decoration: underline;
-          }
-        }
         .header-title {
           display: flex;
           align-items: center;
@@ -288,6 +277,12 @@ a {
         .page-title {
           font-size: 1.5rem;
           font-weight: 600;
+        }
+
+        .title {
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
       .user-holder {

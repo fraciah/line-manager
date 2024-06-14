@@ -2,12 +2,13 @@ import Home from "../pages/web/Home";
 import SignUp from "../pages/auth/SignUp";
 import Login from "../pages/auth/Login";
 import Users from "../pages/web/users/Users";
+import UserView from "../pages/web/users/UserView";
 import Managers from "../pages/web/managers/Managers";
+import ManagerView from "../pages/web/managers/ManagerView";
 import Employees from "../pages/web/employees/Employees";
 import Tasks from "../pages/web/tasks/Tasks";
 import Groups from "../pages/web/groups/Groups";
 import Error404 from "../pages/errors/Error404";
-import UserView from "../pages/web/users/UserView";
 import Profile from "../pages/web/Profile";
 
 export const routes = [
@@ -38,6 +39,10 @@ export const routes = [
     {
         path: "/managers",
         element: Managers,
+    },
+    {
+        path: "/managers/:id/view",
+        element: ManagerView,
     },
     {
         path: "/employees",
