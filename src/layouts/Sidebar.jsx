@@ -1,37 +1,52 @@
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
+import useAuth from "../hooks/useAuth";
+import useFireStoreDoc from "../hooks/useFireStoreDoc";
 import { NavLink, useNavigate } from "react-router-dom";
-import { BookCheck, Boxes, ChevronRight, Contact, Lock, UserCheck, Users } from "lucide-react";
+import { BookCheck, Boxes, ChevronRight, Contact, Lock, User, UserCheck, Users } from "lucide-react";
 import logo from "../assets/images/logo.png";
 
 const Sidebar = ({ toggleSideBar, hideSidebar }) => {
     const navigate = useNavigate();
-
+    const { user } = useAuth();
+    const { document: currentUser } = useFireStoreDoc("users", user?.uid);  
+    
     const navLinks = [
+        {
+            path: "/profile",
+            icon: <User />,
+            title: "Profile",
+            view : ["Admin", "Manager", "Employee"],
+        },
         {
             path: "/users",
             icon: <Users />,
             title: "Users",
+            view : ["Admin"],
         },
         {
             path: "/managers",
             icon: <UserCheck />,
             title: "Managers",
+            view : ["Admin", "Manager"],
         },
         {
             path: "/employees",
             icon: <Contact />,
             title: "Employees",
+            view : ["Admin", "Manager"],
         },
         {
             path: "/tasks",
             icon: <BookCheck />,
             title: "Tasks",
+            view : ["Admin", "Manager", "Employee"],
         },
         {
             path: "/groups",
             icon: <Boxes />,
             title: "Groups",
+            view : ["Admin", "Manager", "Employee"],
         },
     ];
 
@@ -63,7 +78,7 @@ const Sidebar = ({ toggleSideBar, hideSidebar }) => {
             {/* // )} */}
             <div className="sidebar-links">
                 <div className="sidelinks">
-                    {navLinks?.map((link, linkIndex) => (
+                    {navLinks?.filter(link => link.view.includes(currentUser?.role)).map((link, linkIndex) => (
                         <NavLink to={link.path} className="sidelink" key={linkIndex}>
                             <div className="icon">
                                 {link.icon}
@@ -72,7 +87,6 @@ const Sidebar = ({ toggleSideBar, hideSidebar }) => {
                         </NavLink>
                     ))}
                 </div>
-
                 <div className="sidelinks">
                     <div className="sidelink logout" onClick={handleLogout}>
                         <div className="icon">

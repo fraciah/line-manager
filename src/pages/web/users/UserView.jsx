@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import { useState } from "react";
 import { db } from '../../../firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { ChevronRight } from "lucide-react";
 
 const UserView = () => {
@@ -18,9 +18,16 @@ const UserView = () => {
     try {
       const userDocRef = doc(db, "users", id);
       await updateDoc(userDocRef, {
+        role: "Manager",
+      });
+
+      //create a new entry in the managers collection
+      const managerDocRef = doc(db, "managers", id);
+      await setDoc(managerDocRef, {
         ...userDoc,
         role: "Manager",
       });
+
       alert("User role updated successfully");
     }
     catch (error) {
@@ -34,7 +41,7 @@ const UserView = () => {
   return (
     <div className="page-container">
       <div className="header">
-        {error && <div>{error}</div>}
+        {error && <div className="">{error}</div>}
         <div className="header-title">
           <div className="title">Admin View</div>
           <ChevronRight />
@@ -118,6 +125,7 @@ const UserView = () => {
             <button 
               className="btn"
               onClick={makeManager}
+              disabled={loading}
             >
               {loading ? "Loading..." : "Make Manager"}
             </button>
