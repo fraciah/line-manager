@@ -5,8 +5,6 @@ import useCollection from "../../../hooks/useCollection";
 const Managers = () => {
   const navigate = useNavigate();
   const { data: managersCollection, loading: managersCollectionLoading } = useCollection("managers");
-  console.log(managersCollectionLoading)
-  console.log("managersCollection", managersCollection)
 
   const managerClicked = (row) => {
     navigate(`/managers/${row.id}/view`)
@@ -24,10 +22,6 @@ const Managers = () => {
     {
       name: "Phone Number",
       selector: (row) => row.phone,
-    },
-    {
-      name: "Is Active",
-      selector: (row) => row.isActive? "Yes" : "No",
     },
   ];
 
