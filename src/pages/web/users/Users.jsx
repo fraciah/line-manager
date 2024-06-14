@@ -23,16 +23,16 @@ const Users = () => {
 
   const columns = [
     {
-      name: "ID",
-      selector: (row) => row.id,
+      name: "Email",
+      selector: (row) => row.email,
+    },
+    {
+      name: "Phone Number",
+      selector: (row) => row.phone,
     },
     {
       name: "Role",
       selector: (row) => row.role,
-    },
-    {
-      name: "Email",
-      selector: (row) => row.email,
     },
   ];
 

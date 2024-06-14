@@ -1,21 +1,40 @@
 import { Link, useParams } from "react-router-dom";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
-import useAuth from "../../../hooks/useAuth";
+import { useState } from "react";
+import { db } from '../../../firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 import { ChevronRight } from "lucide-react";
 
 const UserView = () => {
   const { id } = useParams();
-  const { user} = useAuth();
-  const { document: userDoc, loading } = useFireStoreDoc("users", id);
-  // console.log("userDoc",userDoc)
-  // console.log("loading",loading)
-  // console.log("user",user)
+  const { document: userDoc, loading: userDocLoading } = useFireStoreDoc("users", id);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  
+  if(userDocLoading) return <div>Loading...</div>
 
-  if(loading) return <div>Loading...</div>
+  const makeManager = async () => {
+    setLoading(true);
+    try {
+      const userDocRef = doc(db, "users", id);
+      await updateDoc(userDocRef, {
+        ...userDoc,
+        role: "Manager",
+      });
+      alert("User role updated successfully");
+    }
+    catch (error) {
+      setError(error.message);
+    }
+    finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="page-container">
       <div className="header">
+        {error && <div>{error}</div>}
         <div className="header-title">
           <div className="title">Admin View</div>
           <ChevronRight />
@@ -85,17 +104,24 @@ const UserView = () => {
             <div className="user-col">
               <div className="user-details">
                 <span>Created On</span>
-                <div className="user-detail">{user?.metadata?.createdAt}</div>
+                {/* <div className="user-detail">{user?.metadata?.createdAt}</div> */}
               </div>
             </div>
             <div className="user-col">
               <div className="user-details">
                 <span>Last Login</span>
-                <div className="user-detail">{user?.metadata?.lastLoginAt}</div>
+                {/* <div className="user-detail">{user?.metadata?.lastLoginAt}</div> */}
               </div>
             </div>
           </div>
-          <button className="btn">Make manager</button>
+          {userDoc?.role === "Employee" && (
+            <button 
+              className="btn"
+              onClick={makeManager}
+            >
+              {loading ? "Loading..." : "Make Manager"}
+            </button>
+          )}
         </div>
       </div>
     </div>
