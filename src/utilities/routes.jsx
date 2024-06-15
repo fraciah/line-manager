@@ -67,6 +67,10 @@ export const routes = [
         element: GroupView,
     },
     {
+        path: "/groups/:id/view/:view",
+        element: GroupView,
+    },
+    {
         path: "*",
         element: Error404,
     },

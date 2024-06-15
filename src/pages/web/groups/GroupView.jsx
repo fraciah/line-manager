@@ -3,7 +3,7 @@ import { db } from "../../../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import useCollection from "../../../hooks/useCollection";
 import useSubCollection from "../../../hooks/useSubCollection";
@@ -12,7 +12,9 @@ import { ChevronRight, Watch } from "lucide-react";
 
 const GroupView = () => {
     const { user } = useAuth();
-    const { id } = useParams();
+    const urlParams = useParams();
+    const id = urlParams?.id;
+    const navigate = useNavigate();
     const { register, getValues, handleSubmit, setValue } = useForm();
     const [filteredEmployees, setFilteredEmployees] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -102,6 +104,10 @@ const GroupView = () => {
         }
     ];
 
+    const groupMemberClicked = (groupMember) => {
+        navigate(`/employees/${groupMember.groupMemberId}/view`)
+    };
+
     if(groupDocLoading) return <div>Loading...</div>
 
   return (
@@ -137,11 +143,30 @@ const GroupView = () => {
             </div>
             <button>Add User</button>
         </form>
-        <Table 
-            columns={columns} 
-            data={groupMembers}
-            // onRowClicked={userClicked}
-        />
+
+        <div className="inner-navs">
+            <NavLink 
+                to={`/groups/${id}/view/groupMembers`}
+            >
+                Group Members 
+            </NavLink>
+            <NavLink 
+                to={`/groups/${id}/view/tasks`}
+            >
+                Tasks 
+            </NavLink>
+        </div>
+
+        {(urlParams?.view === undefined || urlParams?.view === "groupMembers") && (
+            <Table 
+                columns={columns} 
+                data={groupMembers}
+                onRowClicked={groupMemberClicked}
+            />
+        )}
+        {urlParams?.view === "tasks" && (
+            <div>Tasks</div>
+        )}
     </div>
   )
 }
