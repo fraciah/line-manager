@@ -8,6 +8,7 @@ import ManagerView from "../pages/web/managers/ManagerView";
 import Employees from "../pages/web/employees/Employees";
 import EmployeeView from "../pages/web/employees/EmployeeView";
 import Tasks from "../pages/web/tasks/Tasks";
+import AddTask from "../pages/web/tasks/AddTask";
 import Groups from "../pages/web/groups/Groups";
 import GroupView from "../pages/web/groups/GroupView";
 import Error404 from "../pages/errors/Error404";
@@ -57,6 +58,10 @@ export const routes = [
     {
         path: "/tasks",
         element: Tasks,
+    },
+    {
+        path: "/tasks/addTask",
+        element: AddTask,
     },
     {
         path: "/groups",

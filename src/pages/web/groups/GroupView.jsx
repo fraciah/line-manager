@@ -24,8 +24,7 @@ const GroupView = () => {
     const { data: employeesCollection, loading: employeesCollectionLoading } = useCollection("employees");
     const { data: usersCollection, loading: usersCollectionLoading } = useCollection("users");
     const { data : groupMembers, loading: groupMembersLoading } = useSubCollection("groups", id, "groupMembers");
-    // console.log("groupMembers", groupMembers);
-    // console.log("usersCollection",usersCollection)
+    const { data : groupTasks, loading: groupTasksLoading } = useSubCollection("groups", id, "tasks");
 
     //filter employees based on search term
     useEffect(() => {
@@ -82,7 +81,7 @@ const GroupView = () => {
         }
     };    
 
-    const columns = [
+    const groupMemberColumns = [
         {
             name: "Name",
             selector: (row) => row.name,
@@ -108,6 +107,34 @@ const GroupView = () => {
         navigate(`/employees/${groupMember.groupMemberId}/view`)
     };
 
+    const groupTaskColumns = [
+        {
+            name: "Task Title",
+            selector: (row) => row.taskTitle,
+        },
+        {
+            name: "Assigned To",
+            selector: (row) => {
+                const user = usersCollection.find(user => user.id === row.assignedTo);
+                return user ? user.name : "Unknown";
+            },
+        },
+        {
+            name: "Assigned At",
+            selector: (row) => new Date(row.assignedAt).toDateString(),
+        },
+        {
+            name : "Assigned By",
+            selector: (row) => {
+                const manager = usersCollection.find(user => user.id === row.assignedBy);
+                return manager ? manager.name : "Unknown";
+            }
+        },
+        {
+            name: "Status",
+            selector: (row) => row.status,
+        }
+    ];
     if(groupDocLoading) return <div>Loading...</div>
 
   return (
@@ -137,7 +164,7 @@ const GroupView = () => {
                         <div 
                             key={employee.id}
                             onClick={() => selectEmployee(employee)}
-                        >{employee.name}ee</div>
+                        >{employee.name}</div>
                     ))}
                 </div>
             </div>
@@ -159,13 +186,17 @@ const GroupView = () => {
 
         {(urlParams?.view === undefined || urlParams?.view === "groupMembers") && (
             <Table 
-                columns={columns} 
+                columns={groupMemberColumns} 
                 data={groupMembers}
                 onRowClicked={groupMemberClicked}
             />
         )}
         {urlParams?.view === "tasks" && (
-            <div>Tasks</div>
+            <Table 
+                columns={groupTaskColumns} 
+                data={groupTasks}
+                // onRowClicked={groupTaskClicked}
+            />
         )}
     </div>
   )

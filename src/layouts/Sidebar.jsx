@@ -40,7 +40,7 @@ const Sidebar = ({ toggleSideBar, hideSidebar }) => {
             path: "/groups",
             icon: <Boxes />,
             title: "Groups",
-            view : ["Admin", "Manager", "Employee"],
+            view : ["Admin", "Manager"],
         },
         {
             path: "/tasks",
