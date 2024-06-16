@@ -55,11 +55,13 @@ const Users = () => {
             <div className="header">
                 <Link to="/users" className="page-title">Users</Link>
             </div>
-            <Table 
-              columns={columns} 
-              data={usersCollection} 
-              onRowClicked={userClicked} 
-            />
+            <div className="page-content">
+              <Table 
+                columns={columns} 
+                data={usersCollection} 
+                onRowClicked={userClicked} 
+              />
+            </div>
         </div>
     )
 }

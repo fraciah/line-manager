@@ -68,49 +68,49 @@ const Tasks = () => {
         )}
       </div>
       <div className="page-content">
-        An overview of all tasks
+        <div>An overview of all tasks</div>
+        {(userDoc?.role === "Manager" || userDoc?.role === "Admin") && (
+          <>
+          <div className="inner-navs">
+            <NavLink to="/tasks/notStarted">Not Started</NavLink>
+            <NavLink to="/tasks/inProgress">In Progress</NavLink>
+            <NavLink to="/tasks/completed">Completed</NavLink>
+          </div>
+          {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "notStarted") && (
+            <Table 
+              columns={taskColumns} 
+              data={pendingTasks}
+            />
+          )}
+          {urlParams?.taskStatus === "completed" && (
+            <Table 
+              // columns={taskColumns} 
+              data={completedTasks}
+            />
+          )}
+          </>
+        )}
+        {userDoc?.role === "Employee" && (
+          <>
+          <div className="inner-navs">
+            <NavLink to="/tasks/notStarted">Not Started</NavLink>
+            <NavLink to="/tasks/inProgress">In Progress</NavLink>
+          </div>
+          {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "notStarted") && (
+            <Table 
+              columns={taskColumns} 
+              data={pendingTasks}
+            />
+          )}
+          {urlParams?.taskStatus === "inProgress" && (
+            <Table 
+              // columns={taskColumns} 
+              data={completedTasks}
+            />
+          )}
+          </>
+        )}
       </div>
-      {(userDoc?.role === "Manager" || userDoc?.role === "Admin") && (
-        <>
-        <div className="inner-navs">
-          <NavLink to="/tasks/notStarted">Not Started</NavLink>
-          <NavLink to="/tasks/inProgress">In Progress</NavLink>
-          <NavLink to="/tasks/completed">Completed</NavLink>
-        </div>
-        {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "notStarted") && (
-          <Table 
-            columns={taskColumns} 
-            data={pendingTasks}
-          />
-        )}
-        {urlParams?.taskStatus === "completed" && (
-          <Table 
-            // columns={taskColumns} 
-            data={completedTasks}
-          />
-        )}
-        </>
-      )}
-      {userDoc?.role === "Employee" && (
-        <>
-        <div className="inner-navs">
-          <NavLink to="/tasks/notStarted">Not Started</NavLink>
-          <NavLink to="/tasks/inProgress">In Progress</NavLink>
-        </div>
-        {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "notStarted") && (
-          <Table 
-            columns={taskColumns} 
-            data={pendingTasks}
-          />
-        )}
-        {urlParams?.taskStatus === "inProgress" && (
-          <Table 
-            // columns={taskColumns} 
-            data={completedTasks}
-          />
-        )}
-        </>
-      )}
     </div>
   );
 };

@@ -4,9 +4,13 @@ import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { doc, setDoc } from "firebase/firestore";
+import logoTrim from "../../assets/images/logoTrim.png";
 
 const SignUp = () => {
-    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const { register, 
+            handleSubmit, 
+            formState: { errors }, 
+        } = useForm();
     const [ error, setError ] = useState("");
     const navigate = useNavigate();
 
@@ -40,40 +44,46 @@ const SignUp = () => {
     }
 
   return (
-    <div className="">
-        <form className="" onSubmit={handleSubmit(onSignIn)}>
-            <div className="">SignUp</div>
-            {error && <div className="">{error}</div>}
-            <div>
+    <div className="auth-container">
+        <form onSubmit={handleSubmit(onSignIn)}>
+            <div className="auth-title-holder">
+                <div className="img-holder">
+                    <img src={logoTrim} alt="img" />    
+                </div>
+                <div className="auth-title">Line Manager</div>
+                <span>
+                    Sign up to get started 
+                </span>
+            </div>
+            {error && <div className="error-message">{error}</div>}
+            <div className="auth-details">
                 <label htmlFor="">Email</label>
-                <div className="">{errors?.email?.message}</div>
+                <div className="error-message">{errors?.email?.message}</div>
                 <input {...register("email", {
                     required: "Please enter your email address",
                 })} 
-                    className="" 
+                    className="auth-input" 
                     type="text" 
                     placeholder="Enter your email"
                 />
             </div>
-            <div>
+            <div className="auth-details">
                 <label htmlFor="">Password</label>
-                <div className="">{errors?.password?.message}</div>
+                <div className="error-message">{errors?.password?.message}</div>
                 <input {...register("password", {
-                    required: "Please enter a password",
+                    required: "Please enter your password",
                     minLength: {
                         value: 6,
                         message: 'Password must be at least 6 characters long',
                     },
                 })} 
-                    className="" 
+                    className="auth-input" 
                     type="password" 
                     placeholder="Enter your password"
                 />
             </div>
-            
-            <button className="">SignUp</button>
-               
-            <div className="">
+            <button className="btn auth-btn">Sign Up</button>
+            <div className="auth-redirect">
                 <p>Already signed up? <span onClick={() => navigate("/login")}>Login here</span></p>
             </div>
         </form>

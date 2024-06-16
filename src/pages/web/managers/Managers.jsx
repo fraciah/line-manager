@@ -30,11 +30,13 @@ const Managers = () => {
       <div className="header">
         <Link to="/managers" className="page-title">Managers</Link>
       </div>
-      <Table 
-        columns={columns} 
-        data={managersCollection}
-        onRowClicked={managerClicked}
-      />
+      <div className="page-content">
+        <Table 
+          columns={columns} 
+          data={managersCollection}
+          onRowClicked={managerClicked}
+        />
+      </div>
     </div>
   )
 }

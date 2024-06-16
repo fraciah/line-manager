@@ -33,8 +33,16 @@ const Navbar = () => {
         >How it Works</Link>
       </div>
       <div className={`auth-links ${navOpen ? "show" : "hide"}`}>
-        <Link to="/signup" className="auth-link sign-up">Sign Up</Link>
-        <Link to="/login" className="auth-link login">Login</Link>
+        <Link 
+          to="/signup" 
+          className="auth-link sign-up"
+          onClick={closeNav}
+        >Sign Up</Link>
+        <Link 
+          to="/login" 
+          className="auth-link login"
+          onClick={closeNav}
+        >Login</Link>
       </div>
     </nav>
   )

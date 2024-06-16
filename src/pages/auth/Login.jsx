@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import logoTrim from "../../assets/images/logoTrim.png";
 
 const Login = () => {
   const [ error, setError ] = useState("");
@@ -35,40 +36,46 @@ const Login = () => {
   }
 
   return (
-    <div className="">
-      <form className="" onSubmit={handleSubmit(onLogin)}>
-        <div className="">Login</div>
-        {error && <div className="">{error}</div>}
-        <div>
-          <label htmlFor="">Email</label>
-          <div className="">{errors?.email?.message}</div>
-          <input {...register("email", {
-                    required: "Please enter your email"
+  <div className="auth-container">
+    <form onSubmit={handleSubmit(onLogin)}>
+      <div className="auth-title-holder">
+        <div className="img-holder">
+          <img src={logoTrim} alt="img" />
+        </div>
+        <div className="auth-title">Line Manager</div>
+        <span>
+          Login to get started
+        </span>  
+      </div>
+      {error && <div className="error-message">{error}</div>}
+      <div className="auth-details">
+        <label htmlFor="">Email</label>
+        <div className="error-message">{errors?.email?.message}</div>
+        <input {...register("email", {
+                  required: "Please enter your email"
+              })} 
+                  className="auth-input" 
+                  type="text" 
+                  placeholder="Enter your email"
+          />
+      </div>
+      <div className="auth-details">
+        <label htmlFor="">Password</label>
+        <div className="error-message">{errors?.password?.message}</div>
+        <input {...register("password", {
+                  required: "Please enter a password"
                 })} 
-                    className="" 
-                    type="text" 
-                    placeholder="Enter your email"
-            />
-        </div>
-        <div>
-          <label htmlFor="">Password</label>
-          <div className="">{errors?.password?.message}</div>
-          <input {...register("password", {
-                    required: "Please enter a password"
-                })} 
-                    className="" 
-                    type="password" 
-                    placeholder="Enter your password"
-            />
-        </div>
-        <div className="auth-btn-container">
-          <button className="btn">Login</button>
-        </div>
-        <div className="">
-            <p>Not registered? <span onClick={() => navigate("/signup")}>Register here</span></p>
-        </div>
-      </form>
-    </div>
+                  className="auth-input" 
+                  type="password" 
+                  placeholder="Enter your password"
+          />
+      </div>
+      <button className="btn auth-btn">Login</button>
+      <div className="auth-redirect">
+          <p>Not registered? <span onClick={() => navigate("/signup")}>Register here</span></p>
+      </div>
+    </form>
+  </div>
   )
 }
 

@@ -18,15 +18,16 @@ const Table = ({ columns, data, onRowClicked }) => {
 export default Table;
 
 const customStyles = {
-    headRow: {
-      style: {
-        background: "#6237A0",
-        color: "white",
-      },
+  headRow: {
+    style: {
+      background: "#8e3b46",
+      color: "white",
+      fontSize: "1rem",
     },
-    rows: {
-      style: {
-        cursor: "pointer",
-      },
+  },
+  rows: {
+    style: {
+      cursor: "pointer", 
     },
+  },
 };
