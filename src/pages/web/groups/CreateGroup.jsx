@@ -14,6 +14,7 @@ const CreateGroup = ({setShowModal}) => {
 
     const [ error, setError ] = useState("");
     const createGroup = async (groupData) => {
+        if(groupData.groupName.trim().length === 0) return setError("Please enter the group name");
         try {
             const groupCollectionRef = collection(db, "groups");
             await addDoc(groupCollectionRef, {
