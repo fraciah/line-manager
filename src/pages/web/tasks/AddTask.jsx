@@ -90,21 +90,34 @@ const AddTask = () => {
             return;
         }
         try{
-            const taskRefSubCollection = doc(collection(db, "groups", selectedGroup.id, "tasks"));
-            const taskId = taskRefSubCollection.id;
+            //add new task to allTasks collection and respective employee and group tasks subcollections
+            const taskRef = doc(collection(db, "allTasks"));
+            const taskId = taskRef.id;
 
-            await setDoc(taskRefSubCollection, {
+            const taskEmployeeSubCollection = doc(db, "employees", selectedUser.groupMemberId, "tasks", taskId);
+            await setDoc(taskEmployeeSubCollection, {
+                taskTitle: data.taskTitle,      
+                taskDesc: data.taskDesc,
+                assignedTo: selectedUser.groupMemberId,
+                assignedToName: selectedUser.name,
+                assignedAt: Date.now(),
+                assignedBy: user.uid,
+                status: "Not Started",
+                isActive: true,
+            });
+
+            const taskGroupSubCollection = doc(db, "groups", selectedGroup.id, "tasks", taskId);
+            await setDoc(taskGroupSubCollection, {
                 taskTitle: data.taskTitle,
                 taskDesc: data.taskDesc,
                 assignedTo: selectedUser.groupMemberId,
                 assignedToName: selectedUser.name,
                 assignedAt: Date.now(),
                 assignedBy: user.uid,
-                status: "In Progress",
+                status: "Not Started",
                 isActive: true,
             });
 
-            const taskRef = doc(db, "allTasks", taskId);
             await setDoc(taskRef, {
                 groupId: selectedGroup.id,
                 groupName: selectedGroup.name,
@@ -114,7 +127,7 @@ const AddTask = () => {
                 assignedToName: selectedUser.name,
                 assignedAt: Date.now(),
                 assignedBy: user.uid,
-                status: "In Progress",
+                status: "Not Started",
                 isActive: true,
             });
             

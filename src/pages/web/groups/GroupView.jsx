@@ -1,6 +1,6 @@
 import useAuth from "../../../hooks/useAuth";
 import { db } from "../../../firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
@@ -64,6 +64,7 @@ const GroupView = () => {
             }
             
             try {
+                //add employee to groupMembers subcollection in the group collection
                 const groupRef = collection(db, "groups", id, "groupMembers");
                 await addDoc(groupRef, {
                     groupMemberId: selectedEmployee.id,
@@ -71,6 +72,16 @@ const GroupView = () => {
                     addedAt: Date.now(),
                     addedBy: user.uid,
                 });
+
+                //add group to employee's groups subcollection in the employees collection
+                const memberGroupRef = doc(db, "employees", selectedEmployee.id, "memberGroups", id);
+                await setDoc(memberGroupRef, {
+                    groupId: id,
+                    name: groupDoc.name,
+                    addedAt: Date.now(),
+                    addedBy: user.uid,
+                });
+
                 setSelectedEmployee(null);
                 setValue("search", "");
                 alert("User added to group successfully!");

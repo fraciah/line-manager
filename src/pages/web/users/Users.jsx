@@ -46,7 +46,7 @@ const Users = () => {
       },
     ];
 
-    if (usersLoading || currentUserLoading) {
+    if (usersLoading) {
         return <div>Loading...</div>; 
     }
 

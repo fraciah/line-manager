@@ -56,12 +56,20 @@ export const routes = [
         element: EmployeeView,
     },
     {
+        path: "/employees/:id/view/:view",
+        element: EmployeeView,
+    },
+    {
         path: "/tasks",
         element: Tasks,
     },
     {
         path: "/tasks/addTask",
         element: AddTask,
+    },
+    {
+        path: "/tasks/:taskStatus",
+        element: Tasks,
     },
     {
         path: "/groups",
