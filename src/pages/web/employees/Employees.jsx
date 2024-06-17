@@ -30,11 +30,13 @@ const Employees = () => {
       <div className="header">
         <Link to="/employees" className="page-title">Employees</Link>
       </div>
-      <Table 
-        columns={columns} 
-        data={employeesCollection}
-        onRowClicked={employeeClicked}
-      />
+      <div className="page-content">
+        <Table 
+          columns={columns} 
+          data={employeesCollection}
+          onRowClicked={employeeClicked}
+        />
+      </div>
     </div>
   )
 }

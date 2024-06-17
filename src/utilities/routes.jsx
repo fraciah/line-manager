@@ -13,11 +13,16 @@ import Groups from "../pages/web/groups/Groups";
 import GroupView from "../pages/web/groups/GroupView";
 import Error404 from "../pages/errors/Error404";
 import Profile from "../pages/web/Profile";
+import HowItWorks from "../pages/web/HowItWorks";
 
 export const routes = [
     {
         path: "/",
         element: Home,
+    },
+    {
+        path: "/how-it-works",
+        element: HowItWorks,
     },
     {
         path: "/signup",
