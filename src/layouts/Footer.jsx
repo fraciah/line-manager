@@ -7,9 +7,9 @@ const Footer = () => {
         <div className="footer-col">
           <div className="footer-col-title">CrispCo</div>
           <div className="footer-col-links">
-            <a href="">About Us</a>
-            <a href="">Our Services</a>
-            <a href="">Contact Us</a>
+            <a href="/">About Us</a>
+            <a href="/">Our Services</a>
+            <a href="/">Contact Us</a>
           </div>
         </div>
         <div className="footer-col">
@@ -24,8 +24,8 @@ const Footer = () => {
         <div className="footer-col">
           <div className="footer-col-title">Socials</div>
           <div className="socials">
-            <a href=""><Linkedin /></a>
-            <a href=""><Slack /></a>
+            <a href="/"><Linkedin /></a>
+            <a href="/"><Slack /></a>
           </div>
           <p>CrispCo - Line Manager</p>
           <p>
