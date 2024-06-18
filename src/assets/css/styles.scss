@@ -866,6 +866,27 @@ footer {
               }
             }
           }
+
+          .manager-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.3rem;
+            border: none;
+            
+            &.disabled {
+              cursor: not-allowed;
+              background-color: #00000030;
+            }
+
+            &.active {
+              background-color: $primary-color;
+              color: white;
+              cursor: pointer;
+
+              &:hover {
+                background-color: $primary-hover-color;
+              }
+            }
+          }
         }
       }
 

@@ -4,15 +4,15 @@ import { useState } from "react";
 import { db } from '../../../firebase';
 import { deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { ChevronRight, Users } from "lucide-react";
+import useCollection from "../../../hooks/useCollection";
 
 const UserView = () => {
   const { id } = useParams();
   const { document: userDoc, loading: userDocLoading } = useFireStoreDoc("users", id);
+  const { data: allTasks, loading: allTasksLoading } = useCollection("allTasks");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
-  if(userDocLoading) return <div>Loading...</div>
-
+  const userHasTasks = allTasks && allTasks.some(task => task.assignedTo === id);
   const makeManager = async () => {
     setLoading(true);
     try {
@@ -42,6 +42,8 @@ const UserView = () => {
       setLoading(false);
     }
   };
+
+  if(userDocLoading|| allTasksLoading) return <div>Loading...</div>
 
   return (
     <div className="page-container">
@@ -114,9 +116,10 @@ const UserView = () => {
           </div>
           {userDoc?.role === "Employee" && (
             <button 
-              className="btn"
+              className={`manager-btn ${loading || userHasTasks ? 'disabled' : 'active'}`}
               onClick={makeManager}
-              disabled={loading}
+              disabled={loading || userHasTasks}
+              title={userHasTasks && "User has pending tasks and cannot be made a manager"}
             >
               {loading ? "Loading..." : "Make Manager"}
             </button>

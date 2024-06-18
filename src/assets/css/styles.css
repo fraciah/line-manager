@@ -720,6 +720,23 @@ footer .tag {
 .main-container .main-content .page-container .user-holder .user-container .user-details-container .user-details span {
   color: gray;
 }
+.main-container .main-content .page-container .user-holder .user-container .manager-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  border: none;
+}
+.main-container .main-content .page-container .user-holder .user-container .manager-btn.disabled {
+  cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.1882352941);
+}
+.main-container .main-content .page-container .user-holder .user-container .manager-btn.active {
+  background-color: #8e3b46;
+  color: white;
+  cursor: pointer;
+}
+.main-container .main-content .page-container .user-holder .user-container .manager-btn.active:hover {
+  background-color: #3e362e;
+}
 .main-container .main-content .page-container .inner-navs {
   width: 100%;
   display: flex;
