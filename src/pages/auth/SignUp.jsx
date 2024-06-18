@@ -42,6 +42,7 @@ const SignUp = () => {
             navigate("/login");
         } 
         catch (error) {
+            setLoading(false);
             if(error.code === "auth/email-already-in-use"){
                 console.log("Email already exists");
                 setError(error.code);

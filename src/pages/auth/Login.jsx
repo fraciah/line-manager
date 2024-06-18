@@ -27,6 +27,7 @@ const Login = () => {
       navigate("/profile");
     } 
     catch (error) {
+      setLoading(false);
       console.log(error);
       console.log(error.code);
       if(error.code === "auth/invalid-credential" || error.code === "auth/invalid-email"){
