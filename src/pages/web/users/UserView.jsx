@@ -16,6 +16,7 @@ const UserView = () => {
   const makeManager = async () => {
     setLoading(true);
     try {
+      //update user role to manager
       const userDocRef = doc(db, "users", id);
       await updateDoc(userDocRef, {
         role: "Manager",

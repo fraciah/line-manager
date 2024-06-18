@@ -923,6 +923,7 @@ footer {
             padding: 0.5rem;
             box-sizing: border-box;
             cursor: pointer;
+            border: none;
             background-color: $primary-color;
           }
         }
@@ -1118,6 +1119,21 @@ footer {
 
   .main-container {
     .main-content {
+      .page-container {
+        .group-form {
+          .input-button-holder {
+            width: 100%;
+            gap: 0.2rem;
+            
+            .search-holder {
+              width: 100%;
+            }
+            .add-button {
+              width: 100%;
+            }
+          }
+        }
+      }
       .profile-container {
         .profile-details {
           gap: 0.5rem;

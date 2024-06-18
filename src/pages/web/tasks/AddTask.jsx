@@ -18,6 +18,7 @@ const AddTask = () => {
         formState: { errors },
     } = useForm();
     const { data: groupsCollection, loading: groupsCollectionLoading  } = useCollection("groups");
+    const { data: managersCollection, loading: managersCollectionLoading  } = useCollection("managers");
     const [selectedGroup, setSelectedGroup] = useState(null); ///////
     const [searchGroup, setSearchGroup] = useState("");  //////
     const [filteredGroups, setFilteredGroups] = useState([]); //////
@@ -26,8 +27,7 @@ const AddTask = () => {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [error, setError] = useState("");
     const { data : groupMembers, loading: groupMembersLoading } = useSubCollection("groups", selectedGroup?.id, "groupMembers");
-    // console.log("groupMembers", groupMembers);
-    // console.log("selectedUser",selectedUser)
+    console.log("managersCollection", managersCollection)
 
     useEffect(() => {
         if(groupsCollection){
@@ -43,7 +43,6 @@ const AddTask = () => {
             }
         }
     }, [searchGroup, groupsCollection]);
-    console.log("SElected User", selectedUser)
 
     useEffect(() => {
         if(groupMembers){
@@ -89,6 +88,13 @@ const AddTask = () => {
             setError("Please choose an employee for this task");
             return;
         }
+        //if selected user is a manager, show error////////
+        const isManager = managersCollection.some(manager => manager.id === selectedUser.groupMemberId);
+        if (isManager) {
+            setError("Managers cannot be assigned tasks");
+            return;
+        }
+
         try{
             //add new task to allTasks collection and respective employee and group tasks subcollections
             const taskRef = doc(collection(db, "allTasks"));
@@ -102,6 +108,7 @@ const AddTask = () => {
                 assignedToName: selectedUser.name,
                 assignedAt: Date.now(),
                 assignedBy: user.uid,
+                groupId: selectedGroup.id,
                 status: "Not Started",
                 isActive: true,
             });
@@ -114,6 +121,7 @@ const AddTask = () => {
                 assignedToName: selectedUser.name,
                 assignedAt: Date.now(),
                 assignedBy: user.uid,
+                groupId: selectedGroup.id,
                 status: "Not Started",
                 isActive: true,
             });
@@ -141,6 +149,7 @@ const AddTask = () => {
         console.log("data", data);
     };
 
+    if(groupsCollectionLoading) return <div>Loading...</div>;
 
   return (
     <div className="page-container">

@@ -769,6 +769,7 @@ footer .tag a:hover {
   padding: 0.5rem;
   box-sizing: border-box;
   cursor: pointer;
+  border: none;
   background-color: #8e3b46;
 }
 .main-container .main-content .page-container .page-content .task-form {
@@ -903,6 +904,16 @@ footer .tag a:hover {
   }
   .navbar .auth-links.show {
     display: flex;
+  }
+  .main-container .main-content .page-container .group-form .input-button-holder {
+    width: 100%;
+    gap: 0.2rem;
+  }
+  .main-container .main-content .page-container .group-form .input-button-holder .search-holder {
+    width: 100%;
+  }
+  .main-container .main-content .page-container .group-form .input-button-holder .add-button {
+    width: 100%;
   }
   .main-container .main-content .profile-container .profile-details {
     gap: 0.5rem;

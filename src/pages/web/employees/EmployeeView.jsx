@@ -1,4 +1,4 @@
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import useSubCollection from "../../../hooks/useSubCollection";
 import useCollection from "../../../hooks/useCollection";
@@ -6,12 +6,14 @@ import Table from "../../../components/Table";
 import { ChevronRight } from "lucide-react";
 
 const EmployeeView = () => {
+    const navigate = useNavigate();
     const urlParams = useParams();
     const { id } = urlParams;
     const { data: managersCollection, loading: managersCollectionLoading } = useCollection("managers");
     const { document: employeeDoc, loading: employeeDocLoading } = useFireStoreDoc("employees", id);
     const { data: groupsSubCollection, loading: groupsSubCollectionLoading } = useSubCollection("employees", id, "memberGroups");
-    
+    const { data: tasksSubCollection, loading: tasksSubCollectionLoading } = useSubCollection("employees", id, "tasks");
+
     const groupColumns = [
         {
             name: "Group Name",
@@ -30,7 +32,45 @@ const EmployeeView = () => {
         }
     ];
 
-    if(employeeDocLoading || managersCollectionLoading) return <div>Loading...</div>
+    const tasksColumns = [
+        {
+            name: "Task Name",
+            selector: (row) => row.taskTitle,
+        },
+        {
+            name: "Created By (Manager)",
+            selector: (row) => {
+                const manager = managersCollection.find(manager => manager.id === row.assignedBy);
+                return manager ? manager.name : "Unknown";
+            },
+        },
+        {
+            name: "Created At",
+            selector: (row) => new Date(row.assignedAt).toDateString(),
+        },
+        {
+            name: "Group",
+            selector: (row) => {
+                const group = groupsSubCollection.find(group => group.id === row.groupId);
+                return group ? group.name : "Unknown";
+            }
+        },
+        {
+            name: "Status",
+            selector: (row) => row.status,
+        }
+    ];
+
+    const taskClicked = (row) => {
+        navigate(`/tasks/${row.id}/view`);
+    };
+
+    if(employeeDocLoading || 
+        managersCollectionLoading || 
+        groupsSubCollectionLoading ||
+        tasksSubCollectionLoading
+    ) return <div>Loading...</div>
+
   return (
     <div className="page-container">
         <div className="header">
@@ -111,12 +151,25 @@ const EmployeeView = () => {
                 >
                     Groups
                 </NavLink>
+                <NavLink 
+                    to={`/employees/${id}/view/tasks`}
+                    className="card-nav"
+                >
+                    Tasks
+                </NavLink>
             </div>
         </div>
         {(urlParams?.view === undefined || urlParams?.view === "groups") && (
             <Table 
                 columns={groupColumns} 
                 data={groupsSubCollection}
+            />
+        )}
+        {(urlParams?.view === "tasks") && (
+            <Table 
+                columns={tasksColumns} 
+                data={tasksSubCollection}
+                onRowClicked={taskClicked}
             />
         )}
     </div>

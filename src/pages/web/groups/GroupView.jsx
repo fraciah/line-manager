@@ -102,6 +102,13 @@ const GroupView = () => {
             selector: (row) => new Date(row.addedAt).toDateString(),
         },
         {
+            name: "Role",
+            selector: (row) => {
+                const user = usersCollection.find(user => user.id === row.groupMemberId);
+                return user ? user.role : "Unknown";
+            },
+        },
+        {
             name: "Added By (Manager ID)",
             selector: (row) => row.addedBy,
         },
@@ -146,7 +153,17 @@ const GroupView = () => {
             selector: (row) => row.status,
         }
     ];
-    if(groupDocLoading) return <div>Loading...</div>
+
+    const taskClicked = (row) => {
+        navigate(`/tasks/${row.groupId}/view`);
+    };
+
+    if(groupDocLoading ||
+        employeesCollectionLoading ||
+        usersCollectionLoading ||
+        groupMembersLoading ||
+        groupTasksLoading
+    ) return <div>Loading...</div>
 
   return (
     <div className="page-container">
@@ -199,7 +216,7 @@ const GroupView = () => {
                     to={`/groups/${id}/view/tasks`}
                     className="card-nav"
                 >
-                    Tasks 
+                    Group Tasks 
                 </NavLink>
             </div>
         </div>
@@ -215,7 +232,7 @@ const GroupView = () => {
             <Table 
                 columns={groupTaskColumns} 
                 data={groupTasks}
-                // onRowClicked={groupTaskClicked}
+                onRowClicked={taskClicked}
             />
         )}
     </div>

@@ -1,5 +1,5 @@
 import useAuth from "../../../hooks/useAuth";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import useCollection from "../../../hooks/useCollection";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import Table from "../../../components/Table";
@@ -7,15 +7,22 @@ import Table from "../../../components/Table";
 const Tasks = () => {
   const { user } = useAuth();
   const urlParams = useParams();
+  const navigate = useNavigate();
   const { document: userDoc, loading: userDocLoading } = useFireStoreDoc("users", user?.uid);
   const { data: usersCollection, loading: usersCollectionLoading } = useCollection("users");
   const { data: tasksCollection, loading: tasksCollectionLoading } = useCollection("allTasks");
 
   let pendingTasks, completedTasks;
   if (tasksCollection) {
-    //filtering tasks with current user's id
-    pendingTasks = tasksCollection.filter(task => task.status === "Not Started" && task.assignedTo === user?.uid);
-    completedTasks = tasksCollection.filter(task => task.status === "Done" && task.assignedTo === user?.uid);
+    if (userDoc?.role === "Employee") {
+      //filtering tasks with current user's id(for employees)
+      pendingTasks = tasksCollection.filter(task => task.status === "Not Started" && task.assignedTo === user?.uid);
+      completedTasks = tasksCollection.filter(task => task.status === "Done" && task.assignedTo === user?.uid);
+    }
+    else {
+      pendingTasks = tasksCollection.filter(task => task.status === "Not Started");
+      completedTasks = tasksCollection.filter(task => task.status === "Done");
+    }
   };
   // console.log(pendingTasks, completedTasks);
 
@@ -56,6 +63,9 @@ const Tasks = () => {
       },
     });
   }
+  const taskClicked = (row) => {
+    navigate(`/tasks/${row.groupId}/view`);
+  };
 
   if (userDocLoading || usersCollectionLoading || tasksCollectionLoading) return <div>Loading...</div>;
 
@@ -100,6 +110,7 @@ const Tasks = () => {
             <Table 
               columns={taskColumns} 
               data={pendingTasks}
+              onRowClicked={taskClicked}
             />
           )}
           {urlParams?.taskStatus === "completed" && (
@@ -134,6 +145,7 @@ const Tasks = () => {
             <Table 
               columns={taskColumns} 
               data={pendingTasks}
+              onRowClicked={taskClicked}
             />
           )}
           {urlParams?.taskStatus === "inProgress" && (

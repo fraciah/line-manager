@@ -9,6 +9,7 @@ import Employees from "../pages/web/employees/Employees";
 import EmployeeView from "../pages/web/employees/EmployeeView";
 import Tasks from "../pages/web/tasks/Tasks";
 import AddTask from "../pages/web/tasks/AddTask";
+import TaskView from "../pages/web/tasks/TaskView";
 import Groups from "../pages/web/groups/Groups";
 import GroupView from "../pages/web/groups/GroupView";
 import Error404 from "../pages/errors/Error404";
@@ -75,6 +76,10 @@ export const routes = [
     {
         path: "/tasks/:taskStatus",
         element: Tasks,
+    },
+    {
+        path: "/tasks/:id/view",
+        element: TaskView,
     },
     {
         path: "/groups",
