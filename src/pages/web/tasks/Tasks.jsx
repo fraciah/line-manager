@@ -64,7 +64,10 @@ const Tasks = () => {
       <div className="header">
         <Link to="/tasks" className="page-title">Tasks</Link>
         {(userDoc?.role === "Manager" || userDoc?.role === "Admin") && (
-          <Link to="/tasks/addTask">Add a Task</Link>
+          <Link 
+            to="/tasks/addTask"
+            className="add-btn" 
+          >Add a Task</Link>
         )}
       </div>
       <div className="page-content">
@@ -72,9 +75,26 @@ const Tasks = () => {
         {(userDoc?.role === "Manager" || userDoc?.role === "Admin") && (
           <>
           <div className="inner-navs">
-            <NavLink to="/tasks/notStarted">Not Started</NavLink>
-            <NavLink to="/tasks/inProgress">In Progress</NavLink>
-            <NavLink to="/tasks/completed">Completed</NavLink>
+            <div className="card-navs-holder">
+              <NavLink 
+                to="/tasks/notStarted"
+                className={`card-nav ${urlParams?.taskStatus === undefined ? "active" : ""}`}
+              >
+                Not Started
+              </NavLink>
+              <NavLink 
+                to="/tasks/inProgress"
+                className="card-nav"
+              >
+                In Progress
+              </NavLink>
+              <NavLink 
+                to="/tasks/completed"
+                className="card-nav"
+              >
+                Completed
+              </NavLink>
+            </div>
           </div>
           {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "notStarted") && (
             <Table 
@@ -88,13 +108,27 @@ const Tasks = () => {
               data={completedTasks}
             />
           )}
+          {urlParams?.taskStatus === "inProgress" && (
+            <Table 
+              // columns={taskColumns} 
+              data={completedTasks}
+            />
+          )}
           </>
         )}
         {userDoc?.role === "Employee" && (
           <>
           <div className="inner-navs">
-            <NavLink to="/tasks/notStarted">Not Started</NavLink>
-            <NavLink to="/tasks/inProgress">In Progress</NavLink>
+            <div className="card-navs-holder">
+              <NavLink 
+                to="/tasks/notStarted"
+                className={`card-nav ${urlParams?.taskStatus === undefined ? "active" : ""}`}
+              >Not Started</NavLink>
+              <NavLink 
+                to="/tasks/inProgress"
+                className="card-nav"
+              >In Progress</NavLink>
+            </div>
           </div>
           {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "notStarted") && (
             <Table 

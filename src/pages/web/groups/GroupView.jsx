@@ -151,48 +151,57 @@ const GroupView = () => {
   return (
     <div className="page-container">
         <div className="header">
-            <div className="header-title">
-                <Link to="/groups" className="page-title title">Groups</Link>
-                <ChevronRight />
-                <div className="page-title">{groupDoc?.name}</div>
-            </div>
-        </div>
-        <form 
-            onSubmit={handleSubmit(addUser)}
-            className="add-user"
-        >
-            {error && <div className="">{error}</div>}
-            <div>
-                <input
-                    type="text"
-                    {...register("search", {
-                        onChange: onSearchChange,
-                    })}
-                    placeholder="Search for user"
-                />
+            <div className="user-header-title">
                 <div>
-                    {filteredEmployees.map(employee => (
-                        <div 
-                            key={employee.id}
-                            onClick={() => selectEmployee(employee)}
-                        >{employee.name}</div>
-                    ))}
+                    <Link to="/groups" className="user-page-title">Groups</Link>
+                </div>
+                <div>
+                    <ChevronRight />
+                    <div className="user-page-title">{groupDoc?.name}</div>
                 </div>
             </div>
-            <button>Add User</button>
+        </div>
+        {error && <div className="error-message">{error}</div>}
+        <form onSubmit={handleSubmit(addUser)} className="group-form">
+            <div className="input-button-holder">
+                <div className="search-holder">
+                    <input
+                        type="text"
+                        {...register("search", {
+                            onChange: onSearchChange,
+                        })}
+                        className="search-input"
+                        placeholder="Search for an employee..."
+                    />
+                    <div className="search-results">
+                        {filteredEmployees.map(employee => (
+                            <div 
+                                key={employee.id}
+                                className="search-result-item"
+                                onClick={() => selectEmployee(employee)}
+                            >{employee.name}</div>
+                        ))}
+                    </div>
+                </div>
+                <button type="submit" className="add-button">Add to Group</button>
+            </div>
         </form>
 
         <div className="inner-navs">
-            <NavLink 
-                to={`/groups/${id}/view/groupMembers`}
-            >
-                Group Members 
-            </NavLink>
-            <NavLink 
-                to={`/groups/${id}/view/tasks`}
-            >
-                Tasks 
-            </NavLink>
+            <div className="card-navs-holder">
+                <NavLink 
+                    to={`/groups/${id}/view/groupMembers`}
+                    className={`card-nav ${urlParams?.view === undefined ? "active" : ""}`}
+                >
+                    Group Members 
+                </NavLink>
+                <NavLink 
+                    to={`/groups/${id}/view/tasks`}
+                    className="card-nav"
+                >
+                    Tasks 
+                </NavLink>
+            </div>
         </div>
 
         {(urlParams?.view === undefined || urlParams?.view === "groupMembers") && (

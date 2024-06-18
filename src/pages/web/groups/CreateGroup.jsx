@@ -31,7 +31,7 @@ const CreateGroup = ({setShowModal}) => {
 
   return (
     <div className="overlay">
-        <div className="confirm-container">
+        <div className="new-group-container">
             <X 
                 className="close-btn"
                 onClick={() => setShowModal(false)}
@@ -39,18 +39,18 @@ const CreateGroup = ({setShowModal}) => {
             {error && <div className="error-message">{error}</div>}
             <div className="title">Create New Group</div>
             <form onSubmit={handleSubmit(createGroup)}>
-                <div>
+                <div className="form-group">
                     <label htmlFor="">Group Name</label>
                     <div className="error-message">{errors?.groupName?.message}</div>
                     <input {...register("groupName", {
                         required: "Please enter the group name"
                     })} 
-                        className="" 
+                        className="create-input" 
                         type="text" 
                         placeholder="Enter group Name"
                     />
                 </div>
-                <button className="btn">Create</button>
+                <button className="btn create">Create</button>
             </form>
         </div>
     </div>

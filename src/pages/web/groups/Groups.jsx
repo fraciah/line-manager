@@ -6,7 +6,7 @@ import CreateGroup from "./CreateGroup";
 const Groups = () => {
   const { data: groupsCollection, loading: groupsCollectionLoading  } = useCollection("groups");
   const [showModal, setShowModal] = useState(false);
-  // console.log(groupsCollection);
+  console.log(groupsCollection);
   
   if(groupsCollectionLoading) return <div>Loading...</div>
 
@@ -14,16 +14,26 @@ const Groups = () => {
     <div className="page-container">
       <div className="header">
         <Link to="/users" className="page-title">Groups</Link>
-        <div onClick={() => setShowModal(true)}>Create Group</div>
+        <div 
+          onClick={() => setShowModal(true)}
+          className="add-btn"
+        >Create Group</div>
       </div>
       {showModal && <CreateGroup setShowModal={setShowModal}/>}
       
       <div className="page-content">
         <div className="group-container">
           {groupsCollection.map(group => (
-            <div key={group.id} className="list-item">
-              <Link to={`/groups/${group.id}/view`}>{group.name}</Link>
-            </div>
+            <Link 
+              key={group.id} 
+              className="group-item"
+              to={`/groups/${group.id}/view`}
+            >
+              <div 
+                className="group-name"
+              >{group.name}</div>
+              <div>Created on {new Date(group.createdAt).toDateString()}</div>
+            </Link>
           ))}
         </div>
       </div>  

@@ -3,7 +3,7 @@ import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import { useState } from "react";
 import { db } from '../../../firebase';
 import { deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Users } from "lucide-react";
 
 const UserView = () => {
   const { id } = useParams();
@@ -45,81 +45,70 @@ const UserView = () => {
   return (
     <div className="page-container">
       <div className="header">
-        {error && <div className="">{error}</div>}
-        <div className="header-title">
-          <Link to="/users" className="page-title title">Users</Link>
-          <ChevronRight />
-          <div className="page-title">User</div>
+        {error && <div className="error-message">{error}</div>}
+        <div className="user-header-title">
+          <div>
+            {/* <Users /> */}
+            <Link to="/users" className="user-page-title">Users</Link>
+          </div>
+          <div>
+            <ChevronRight />
+            <span className="user-page-title">User</span>    
+          </div>
         </div>
       </div>
 
       <div className="user-holder">
         <div className="user-card">
           <div className="avatar">
-            {userDoc?.name.slice(0, 2)}
+            {userDoc?.name ? userDoc?.name.slice(0, 2) : "NA"}
           </div>
           <div className="user-card-details">
-            <div className="user-card-detail">{userDoc?.name}</div>
-            <div className="user-card-detail">{userDoc?.username}</div>
+            <div className="user-card-name">Name: {userDoc?.name? userDoc?.name : "NA"}</div>
+            <div className="user-card-username">Username: {userDoc?.username? userDoc?.username : "NA"}</div>
           </div>
         </div>
         <div className="user-container">
-          <div className="user-row">
-            <div className="user-col">
-              <div className="user-details">
-                <span>Id</span>
-                <div className="user-detail">{userDoc?.id}</div>
-              </div>
-              <div className="user-details">
-                <span>Phone</span>
-                <div className="user-detail">{userDoc?.phone}</div>
-              </div>
+          <div className="user-details-container">
+            <div className="user-details">
+              <span>Id:</span>
+              <div className="user-detail">{userDoc?.id}</div>
             </div>
-            <div className="user-col">
-              <div className="user-details">
-                <span>Role</span>
-                <div className="user-detail">{userDoc?.role}</div>
-              </div>
-              <div className="user-details">
-                <span>Email</span>
-                <div className="user-detail">{userDoc?.email}</div>
-              </div>
+            <div className="user-details">
+              <span>Phone:</span>
+              <div className="user-detail">{userDoc?.phone ? userDoc?.phone : "NA"}</div>
             </div>
-          </div>
-          <div className="user-row">
-            <div className="user-col">
-              <div className="user-details">
-                <span>City</span>
-                <div className="user-detail">{userDoc?.address?.city}</div>
-              </div>
-              <div className="user-details">
-                <span>Street</span>
-                <div className="user-detail">{userDoc?.address?.street}</div>
-              </div>
+            <div className="user-details">
+              <span>Role:</span>
+              <div className="user-detail">{userDoc?.role}</div>
             </div>
-            <div className="user-col">
-              <div className="user-details">
-                <span>Zipcode</span>
-                <div className="user-detail">{userDoc?.address?.zipcode}</div>
-              </div>
-              <div className="user-details">
-                <span>Website</span>
-                <div className="user-detail">{userDoc?.website}</div>
-              </div>
+            <div className="user-details">
+              <span>Email:</span>
+              <div className="user-detail">{userDoc?.email}</div>
             </div>
-          </div>
-          <div className="user-row">
-            <div className="user-col">
-              <div className="user-details">
-                <span>Created On</span>
-                {/* <div className="user-detail">{user?.metadata?.createdAt}</div> */}
-              </div>
+            <div className="user-details">
+              <span>City:</span>
+              <div className="user-detail">{userDoc?.address?.city? userDoc?.address?.city : "NA"}</div>
             </div>
-            <div className="user-col">
-              <div className="user-details">
-                <span>Last Login</span>
-                {/* <div className="user-detail">{user?.metadata?.lastLoginAt}</div> */}
-              </div>
+            <div className="user-details">
+              <span>Street:</span>
+              <div className="user-detail">{userDoc?.address?.street? userDoc?.address?.street : "NA"}</div>
+            </div>
+            <div className="user-details">
+              <span>Zipcode:</span>
+              <div className="user-detail">{userDoc?.address?.zipcode? userDoc?.address?.zipcode : "NA"}</div>
+            </div>
+            <div className="user-details">
+              <span>Website:</span>
+              <div className="user-detail">{userDoc?.website? userDoc?.website: "NA"}</div>
+            </div>
+            <div className="user-details">
+              <span>Joined On:</span>
+              <div className="user-detail">NA</div>
+            </div>
+            <div className="user-details">
+              <span>Last Login:</span>
+              <div className="user-detail">NA</div>
             </div>
           </div>
           {userDoc?.role === "Employee" && (

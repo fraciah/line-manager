@@ -145,39 +145,43 @@ const AddTask = () => {
   return (
     <div className="page-container">
         <div className="header">
-            <div className="header-title">
-                <Link to="/tasks" className="page-title">Tasks</Link>
-                <ChevronRight />
-                <div className="">Add a Task</div>
+            <div className="user-header-title">
+                <div>
+                    <Link to="/tasks" className="user-page-title">Tasks</Link>
+                </div>
+                <div>
+                    <ChevronRight />
+                    <div className="user-page-title">Add a Task</div>
+                </div>
             </div>
-            <Link to="/tasks">Cancel</Link >
+            <Link to="/tasks" className="btn-cancel">Cancel</Link >
         </div>
 
         <div className="page-content">
-            <form onSubmit={handleSubmit(addTask)}>
-                {error && <div className="">{error}</div>}
-                <div>
+            <form onSubmit={handleSubmit(addTask)} className="task-form">
+                {error && <div className="error-message">{error}</div>}
+                <div className="form-group">
                     <label htmlFor="">Task Title</label>
-                    <div className="">{errors?.taskTitle?.message}</div>
+                    <div className="error-message">{errors?.taskTitle?.message}</div>
                     <input {...register("taskTitle", {
                         required: "Please enter the task title"
                     })} 
-                        className="" 
+                        className="task-input" 
                         type="text" 
                         placeholder="Enter a task title"
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label htmlFor="">Task Description</label>
-                    <div className="">{errors?.taskDesc?.message}</div>
+                    <div className="error-message">{errors?.taskDesc?.message}</div>
                     <textarea {...register("taskDesc", {
                         required: "Please enter the task description"
                     })} 
-                        className="" 
+                        className="task-input" 
                         placeholder="Enter a task description"
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label htmlFor="">Group</label>
                     <div>
                         <input
@@ -186,11 +190,13 @@ const AddTask = () => {
                                 required: "Please enter the group",
                                 onChange: onGroupChange,
                             })}
+                            className="task-input"
                             placeholder="Search for group"
                         />
-                        <div>
+                        <div className="search-results">
                             {filteredGroups?.map(group => (
                                 <div 
+                                    className="search-result-item"
                                     key={group.id}
                                     onClick={() => selectGroup(group)}
                                 >{group.name}</div>
@@ -204,9 +210,9 @@ const AddTask = () => {
                     </div>
                 )}
                 {groupMembers.length > 0 && (
-                <div>
+                <div className="form-group">
                     <label htmlFor="">Assign to</label>
-                    <div className="">{errors?.searchUser?.message}</div> 
+                    <div className="error-message">{errors?.searchUser?.message}</div> 
                     <div>
                         <input
                             type="text"
@@ -214,11 +220,13 @@ const AddTask = () => {
                                 required: "Please choose an employee for this task",
                                 onChange: onUserChange,
                             })}
+                            className="task-input"
                             placeholder="Search for user"
                         />
-                        <div>
+                        <div className="search-results">
                             {filteredUsers?.map(user => (
                                 <div 
+                                    className="search-result-item"
                                     key={user.id}
                                     onClick={() => selectUser(user)}
                                 >{user.name}</div>
@@ -237,9 +245,9 @@ const AddTask = () => {
                     />
                 </div> */}
                 {groupMembers.length > 0 ?
-                    <button className="btn">Assign</button>
+                    <button className="btn assign">Assign</button>
                     :
-                    <button disabled>Assign</button>
+                    <button disabled className="disabled">Assign</button>
                 }
             </form>
         </div>
