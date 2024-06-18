@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import logoTrim from "../../assets/images/logoTrim.png";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [ error, setError ] = useState("");
   const navigate = useNavigate();
   const { register,
@@ -15,12 +16,14 @@ const Login = () => {
 
 
   const onLogin = async(userData) => {
+    setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, userData.email, userData.password);
       const user = userCredential.user;
       localStorage.setItem("token", user.accessToken);
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("isLoggedIn", "true");
+      setLoading(false);  
       navigate("/profile");
     } 
     catch (error) {
@@ -70,7 +73,9 @@ const Login = () => {
                   placeholder="Enter your password"
           />
       </div>
-      <button className="btn auth-btn">Login</button>
+      <button className="btn auth-btn">
+        {loading ? "Authenticating..." : "Login"}
+      </button>
       <div className="auth-redirect">
           <p>Not registered? <span onClick={() => navigate("/signup")}>Register here</span></p>
       </div>

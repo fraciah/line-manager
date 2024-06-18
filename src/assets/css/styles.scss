@@ -616,12 +616,19 @@ footer {
     min-height: 100vh;
     transition: all 200ms ease-in-out;
     overflow-y: auto;
+    position: absolute; 
     padding: 3rem 1rem;
 
     &.hide {
       width: calc(100% - 17%);
     }
 
+    .profile-container {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
     .page-container {
       width: 100%;
@@ -629,7 +636,63 @@ footer {
       flex-direction: column;
       background: white;
       padding: 1rem;   
-      box-shadow: 0 0 1rem #00000030;           
+      box-shadow: 0 0 1rem #00000030; 
+      
+      .profile-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .title-holder {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .title {
+            color: $primary-color;
+            font-size: 1.5rem;
+            font-weight: 600;
+          }
+          .role {
+            font-size: 1.8rem;
+            font-weight: 600;
+            padding-left: 0.5rem;
+          }
+          .admin {
+            color: #0047AB;
+            border-left: 1px solid #0047AB;
+            border-bottom: 1px solid #0047AB;
+          }
+          .manager {
+            color: #00796B;
+            border-left: 1px solid #00796B;
+            border-bottom: 1px solid #00796B;
+          }
+          .employee {
+            color: #808080;
+            border-left: 1px solid #808080;
+            border-bottom: 1px solid #808080;
+          }
+        }
+
+        .details {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+          padding: 2rem 0;
+
+          .profile-detail {
+            display: flex;
+            gap: 1rem;
+
+            .detail-title {
+              width: 150px;
+              white-space: nowrap;
+              font-weight: 600;
+            }
+          }
+        }
+      }
       
       .header {
         width: 100%;
@@ -1053,12 +1116,37 @@ footer {
     }
   }
 
+  .main-container {
+    .main-content {
+      .profile-container {
+        .profile-details {
+          gap: 0.5rem;
+
+          .title-holder {
+            .role {
+              font-size: 1.5rem;
+            }
+          }
+
+          .details {
+            gap: 1rem;
+            padding: 1.8rem 0;
+
+            .profile-detail {
+              gap: 0.1rem;
+
+              .detail-title {
+                width: 80px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .home-container {
     .header-container {
-      // .home-background {
-      //   height: 50vh;
-      // }
-
       .header {
         .header-title {
           font-size: 3rem;
@@ -1137,6 +1225,19 @@ footer {
   .overlay {
     .new-group-container {
       left: 60%;
+    }
+  }
+
+  .main-container {
+    .main-content {
+      .profile-container {
+        .profile-details {
+          .details {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
     }
   }
 
@@ -1235,9 +1336,36 @@ footer {
 }
 
 @media screen and (max-width: 350px) {
-  // .navbar {
+  // body {
   //   background: green;
   // }
+
+  .main-container {
+    .main-content {
+      .profile-container {
+        .profile-details {
+          .title-holder{
+            flex-direction: column;
+            gap: 0.8rem;
+
+            .title {
+              font-size: 1.2rem;
+            }
+            .role {
+              font-size: 1rem;
+            }
+          }
+          .details {
+            padding: 1rem 0;
+
+            .profile-detail {
+              flex-direction: column;
+            }
+          }
+        }
+      }
+    }
+  }
 
   .home-container {
     .header-container {

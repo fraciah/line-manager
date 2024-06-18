@@ -8,16 +8,16 @@ const Tasks = () => {
   const { user } = useAuth();
   const urlParams = useParams();
   const { document: userDoc, loading: userDocLoading } = useFireStoreDoc("users", user?.uid);
-  console.log("userDoc", userDoc, userDocLoading)
   const { data: usersCollection, loading: usersCollectionLoading } = useCollection("users");
   const { data: tasksCollection, loading: tasksCollectionLoading } = useCollection("allTasks");
 
   let pendingTasks, completedTasks;
   if (tasksCollection) {
-    pendingTasks = tasksCollection.filter(task => task.status === "Not Started");
-    completedTasks = tasksCollection.filter(task => task.status === "Done");
+    //filtering tasks with current user's id
+    pendingTasks = tasksCollection.filter(task => task.status === "Not Started" && task.assignedTo === user?.uid);
+    completedTasks = tasksCollection.filter(task => task.status === "Done" && task.assignedTo === user?.uid);
   };
-  console.log(pendingTasks, completedTasks);
+  // console.log(pendingTasks, completedTasks);
 
   const taskColumns = [
     {
@@ -57,7 +57,7 @@ const Tasks = () => {
     });
   }
 
-  if (tasksCollectionLoading) return <div>Loading...</div>;
+  if (userDocLoading || usersCollectionLoading || tasksCollectionLoading) return <div>Loading...</div>;
 
   return (
     <div className="page-container">

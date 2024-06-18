@@ -11,10 +11,12 @@ const SignUp = () => {
             handleSubmit, 
             formState: { errors }, 
         } = useForm();
+    const [loading, setLoading] = useState(false);
     const [ error, setError ] = useState("");
     const navigate = useNavigate();
 
-    const onSignIn = async(userData) => {
+    const onSignUp = async(userData) => {
+        setLoading(true);
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
            
@@ -24,28 +26,42 @@ const SignUp = () => {
                 email: userData.email,
                 role: "Employee",
                 isAdmin: false,
+                isActive: true,
             });
+
+            const employeeDocRef = doc(db, "employees", auth.currentUser.uid);
+            await setDoc(employeeDocRef, {
+                uid: auth.currentUser.uid,
+                email: userData.email,
+                role: "Employee",
+                isAdmin: false,
+                isActive: true,
+            })
+            alert("Sucessfully signed up");
+            setLoading(false);
             navigate("/login");
         } 
         catch (error) {
             if(error.code === "auth/email-already-in-use"){
                 console.log("Email already exists");
                 setError(error.code);
+                setLoading(false);
             }
             else if(error.code === "auth/provider-already-linked"){
                 console.log("The provider is already linked to another account");
                 setError("The provider is already linked to another account");
+                setLoading(false);
             }
             else{
                 console.log("!register",error);
-                setError(error);
+                setError(error.message);
             }
         }
     }
 
   return (
     <div className="auth-container">
-        <form onSubmit={handleSubmit(onSignIn)}>
+        <form onSubmit={handleSubmit(onSignUp)}>
             <div className="auth-title-holder">
                 <div className="img-holder">
                     <img src={logoTrim} alt="img" />    
@@ -82,7 +98,10 @@ const SignUp = () => {
                     placeholder="Enter your password"
                 />
             </div>
-            <button className="btn auth-btn">Sign Up</button>
+            <button className="btn auth-btn"
+            >
+                {loading? "Getting started..." : "Sign Up"}
+            </button>
             <div className="auth-redirect">
                 <p>Already signed up? <span onClick={() => navigate("/login")}>Login here</span></p>
             </div>
