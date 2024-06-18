@@ -11,7 +11,7 @@ const Home = () => {
       <div className="header-container">
         <img src={background} alt="" className="home-background"/>
         <div className="header">
-          <div className="header-title">CrispCo.</div>
+          <div className="header-title">CrispCo</div>
           <div className="header-title">Line Management</div>
           <p>
             CrispCo's Line Management System.

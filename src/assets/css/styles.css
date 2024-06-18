@@ -186,8 +186,6 @@ footer .tag {
   display: flex;
   justify-content: center;
   padding: 0.8rem 0;
-}
-footer .tag a:hover {
   text-decoration: underline;
 }
 
@@ -403,6 +401,55 @@ footer .tag a:hover {
 }
 .overlay .new-group-container form .create {
   width: 100%;
+}
+
+.how-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.how-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, #C8C8D5 2px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.how-container .how-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  z-index: 3;
+  padding: 2rem 1rem;
+  background-color: #F0F0F0;
+}
+.how-container .how-content .how-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #8e3b46;
+  font-weight: 600;
+}
+.how-container .how-content .section .section-title {
+  font-size: 1.5rem;
+  color: #8e3b46;
+  margin-bottom: 0.5rem;
+}
+.how-container .how-content .section ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  gap: 1.2rem;
+}
+.how-container .how-content .section ul li {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+  color: #1e1e1f;
 }
 
 .main-container .sidebar {
