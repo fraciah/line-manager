@@ -21,13 +21,13 @@ A web based application designed to help an organization manage their department
 
 ### Installation
 1. Clone the repository:
-
+    ```sh
     git clone https://github.com/fraciah/line-manager.git
     cd line-manager
 
 2. Install dependencies:
     - Install npm packages
-
+        ```sh
         npm install
 
 3. Connect to firebase:
@@ -47,8 +47,8 @@ A web based application designed to help an organization manage their department
         - Change `allow read, write: if false;` to `allow read, write: if request.auth != null`
 
 4. Start the development server:
+    ```sh
     npm run dev
-
 
 ### First-Time Usage
 1. Admin.
