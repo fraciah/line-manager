@@ -680,7 +680,7 @@ footer {
       width: calc(100% - 17%);
     }
 
-    .profile-container {
+    .item-container {
       display: flex;
       width: 100%;
       flex-direction: column;
@@ -694,8 +694,61 @@ footer {
       background: white;
       padding: 1rem;   
       box-shadow: 0 0 1rem #00000030; 
+
+      .task-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .task-title {
+          width: 100%;
+          color: $primary-color;
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+        .task-desc {
+          color: $text-color;
+        }
+      }
+
+      .actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        .task-btn {
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+          cursor: pointer;
+          border-radius: 0.3rem;
+          border: none;
+        }
+
+        .edit {
+          background-color: rgb(32, 135, 32);
+          color: white;
+
+          &:hover {
+            background-color: rgb(3, 90, 3);
+          }
+        }
+
+        .del {
+          background-color: rgb(193, 53, 53);
+          color: white;
+
+          &:hover {
+            background-color: rgb(163, 19, 19);
+          }
+        }
+
+        .disabled {
+          cursor: not-allowed;
+          background-color: #00000030;
+        }
+      }
       
-      .profile-details {
+      .item-details {
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -738,7 +791,7 @@ footer {
           gap: 1.5rem;
           padding: 2rem 0;
 
-          .profile-detail {
+          .item-detail {
             display: flex;
             gap: 1rem;
 
@@ -797,7 +850,7 @@ footer {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          margin-bottom: 2rem;
+          margin-bottom: 1rem;
 
           div {
             display: flex;
@@ -949,7 +1002,6 @@ footer {
       .group-form {
         display: flex;
         width: 100%;
-        // background-color: pink;
 
         .input-button-holder {
           display: flex;
@@ -1212,8 +1264,8 @@ footer {
           }
         }
       }
-      .profile-container {
-        .profile-details {
+      .item-container {
+        .item-details {
           gap: 0.5rem;
 
           .title-holder {
@@ -1226,8 +1278,7 @@ footer {
             gap: 1rem;
             padding: 1.8rem 0;
 
-            .profile-detail {
-              gap: 0.1rem;
+            .item-detail {
 
               .detail-title {
                 width: 80px;
@@ -1324,8 +1375,8 @@ footer {
 
   .main-container {
     .main-content {
-      .profile-container {
-        .profile-details {
+      .item-container {
+        .item-details {
           .details {
             display: flex;
             flex-direction: column;
@@ -1436,8 +1487,8 @@ footer {
 
   .main-container {
     .main-content {
-      .profile-container {
-        .profile-details {
+      .item-container {
+        .item-details {
           .title-holder{
             flex-direction: column;
             gap: 0.8rem;
@@ -1452,7 +1503,7 @@ footer {
           .details {
             padding: 1rem 0;
 
-            .profile-detail {
+            .item-detail {
               flex-direction: column;
             }
           }

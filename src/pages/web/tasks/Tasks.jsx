@@ -12,19 +12,19 @@ const Tasks = () => {
   const { data: usersCollection, loading: usersCollectionLoading } = useCollection("users");
   const { data: tasksCollection, loading: tasksCollectionLoading } = useCollection("allTasks");
 
-  let pendingTasks, completedTasks;
+  let notStartedTasks, completedTasks;
+
   if (tasksCollection) {
     if (userDoc?.role === "Employee") {
       //filtering tasks with current user's id(for employees)
-      pendingTasks = tasksCollection.filter(task => task.status === "Not Started" && task.assignedTo === user?.uid);
+      notStartedTasks = tasksCollection.filter(task => task.status === "Not Started" && task.assignedTo === user?.uid);
       completedTasks = tasksCollection.filter(task => task.status === "Done" && task.assignedTo === user?.uid);
     }
     else {
-      pendingTasks = tasksCollection.filter(task => task.status === "Not Started");
+      notStartedTasks = tasksCollection.filter(task => task.status === "Not Started");
       completedTasks = tasksCollection.filter(task => task.status === "Done");
     }
   };
-  // console.log(pendingTasks, completedTasks);
 
   const taskColumns = [
     {
@@ -64,7 +64,7 @@ const Tasks = () => {
     });
   }
   const taskClicked = (row) => {
-    navigate(`/tasks/${row.groupId}/view`);
+    navigate(`/tasks/${row.id}/view`);
   };
 
   if (userDocLoading || usersCollectionLoading || tasksCollectionLoading) return <div>Loading...</div>;
@@ -109,7 +109,7 @@ const Tasks = () => {
           {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "notStarted") && (
             <Table 
               columns={taskColumns} 
-              data={pendingTasks}
+              data={notStartedTasks}
               onRowClicked={taskClicked}
             />
           )}
@@ -144,7 +144,7 @@ const Tasks = () => {
           {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "notStarted") && (
             <Table 
               columns={taskColumns} 
-              data={pendingTasks}
+              data={notStartedTasks}
               onRowClicked={taskClicked}
             />
           )}
