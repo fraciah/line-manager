@@ -155,7 +155,7 @@ const GroupView = () => {
     ];
 
     const taskClicked = (row) => {
-        navigate(`/tasks/${row.groupId}/view`);
+        navigate(`/tasks/${row.id}/view`);
     };
 
     if(groupDocLoading ||

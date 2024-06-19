@@ -21,7 +21,7 @@ const Sidebar = ({ toggleSideBar, hideSidebar }) => {
         {
             path: "/users",
             icon: <Users />,
-            title: "Users",
+            title: "All Users",
             view : ["Admin"],
         },
         {

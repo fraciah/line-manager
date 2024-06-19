@@ -8,9 +8,9 @@ const Profile = () => {
   if(currentUserLoading) return <div>Loading...</div>;
   
   return (
-    <div className="profile-container">  
+    <div className="item-container">  
       <div className="page-container">  
-        <div className="profile-details"> 
+        <div className="item-details"> 
           <div className="title-holder"> 
             <span className="title">My Profile</span> 
             {currentUser?.role === "Admin" && 
@@ -24,19 +24,19 @@ const Profile = () => {
             }
           </div>
           <div className="details">  
-            <div className="profile-detail">  
+            <div className="item-detail">  
               <span className="detail-title">Name:</span>
               <span>{currentUser?.name ? currentUser?.name :"NA"}</span>
             </div>
-            <div className="profile-detail">  
+            <div className="item-detail">  
               <span className="detail-title">Email:</span>
               <span>{currentUser?.email ? currentUser?.email :"NA"}</span>
             </div>
-            <div className="profile-detail">  
+            <div className="item-detail">  
               <span className="detail-title">Username:</span>
               <span>{currentUser?.username ? currentUser?.username :"NA"}</span>
             </div>
-            <div className="profile-detail">  
+            <div className="item-detail">  
               <span className="detail-title">Phone No:</span>
               <span>{currentUser?.phone ? currentUser?.phone :"NA"}</span>
             </div>
@@ -44,21 +44,21 @@ const Profile = () => {
         </div>
       </div>
       <div className="page-container">
-        <div className="profile-details">
+        <div className="item-details">
           <div className="details">  
-            <div className="profile-detail">  
+            <div className="item-detail">  
               <span className="detail-title">City:</span>
               <span>{currentUser?.address?.city ? currentUser?.address?.city :"NA"}</span>
             </div>
-            <div className="profile-detail">  
+            <div className="item-detail">  
               <span className="detail-title">Street:</span>
               <span>{currentUser?.address?.street ? currentUser?.address?.street :"NA"}</span>
             </div>
-            <div className="profile-detail">  
+            <div className="item-detail">  
               <span className="detail-title">Suite:</span>
               <span>{currentUser?.address?.suite ? currentUser?.address?.suite :"NA"}</span>
             </div>
-            <div className="profile-detail">  
+            <div className="item-detail">  
               <span className="detail-title">ZipCode:</span>
               <span>{currentUser?.address?.zipcode ? currentUser?.address?.zipcode :"NA"}</span>
             </div>

@@ -560,7 +560,7 @@ footer .tag {
 .main-container .main-content.hide {
   width: 83%;
 }
-.main-container .main-content .profile-container {
+.main-container .main-content .item-container {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -574,52 +574,96 @@ footer .tag {
   padding: 1rem;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1882352941);
 }
-.main-container .main-content .page-container .profile-details {
+.main-container .main-content .page-container .task-info {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-.main-container .main-content .page-container .profile-details .title-holder {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.main-container .main-content .page-container .profile-details .title-holder .title {
+.main-container .main-content .page-container .task-info .task-title {
+  width: 100%;
   color: #8e3b46;
   font-size: 1.5rem;
   font-weight: 600;
 }
-.main-container .main-content .page-container .profile-details .title-holder .role {
+.main-container .main-content .page-container .task-info .task-desc {
+  color: #1e1e1f;
+}
+.main-container .main-content .page-container .actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.main-container .main-content .page-container .actions .task-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  border: none;
+}
+.main-container .main-content .page-container .actions .edit {
+  background-color: rgb(32, 135, 32);
+  color: white;
+}
+.main-container .main-content .page-container .actions .edit:hover {
+  background-color: rgb(3, 90, 3);
+}
+.main-container .main-content .page-container .actions .del {
+  background-color: rgb(193, 53, 53);
+  color: white;
+}
+.main-container .main-content .page-container .actions .del:hover {
+  background-color: rgb(163, 19, 19);
+}
+.main-container .main-content .page-container .actions .disabled {
+  cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.1882352941);
+}
+.main-container .main-content .page-container .item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.main-container .main-content .page-container .item-details .title-holder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-container .main-content .page-container .item-details .title-holder .title {
+  color: #8e3b46;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.main-container .main-content .page-container .item-details .title-holder .role {
   font-size: 1.8rem;
   font-weight: 600;
   padding-left: 0.5rem;
 }
-.main-container .main-content .page-container .profile-details .title-holder .admin {
+.main-container .main-content .page-container .item-details .title-holder .admin {
   color: #0047AB;
   border-left: 1px solid #0047AB;
   border-bottom: 1px solid #0047AB;
 }
-.main-container .main-content .page-container .profile-details .title-holder .manager {
+.main-container .main-content .page-container .item-details .title-holder .manager {
   color: #00796B;
   border-left: 1px solid #00796B;
   border-bottom: 1px solid #00796B;
 }
-.main-container .main-content .page-container .profile-details .title-holder .employee {
+.main-container .main-content .page-container .item-details .title-holder .employee {
   color: #808080;
   border-left: 1px solid #808080;
   border-bottom: 1px solid #808080;
 }
-.main-container .main-content .page-container .profile-details .details {
+.main-container .main-content .page-container .item-details .details {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   padding: 2rem 0;
 }
-.main-container .main-content .page-container .profile-details .details .profile-detail {
+.main-container .main-content .page-container .item-details .details .item-detail {
   display: flex;
   gap: 1rem;
 }
-.main-container .main-content .page-container .profile-details .details .profile-detail .detail-title {
+.main-container .main-content .page-container .item-details .details .item-detail .detail-title {
   width: 150px;
   white-space: nowrap;
   font-weight: 600;
@@ -662,7 +706,7 @@ footer .tag {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .main-container .main-content .page-container .header .user-header-title div {
   display: flex;
@@ -979,20 +1023,17 @@ footer .tag {
   .main-container .main-content .page-container .group-form .input-button-holder .add-button {
     width: 100%;
   }
-  .main-container .main-content .profile-container .profile-details {
+  .main-container .main-content .item-container .item-details {
     gap: 0.5rem;
   }
-  .main-container .main-content .profile-container .profile-details .title-holder .role {
+  .main-container .main-content .item-container .item-details .title-holder .role {
     font-size: 1.5rem;
   }
-  .main-container .main-content .profile-container .profile-details .details {
+  .main-container .main-content .item-container .item-details .details {
     gap: 1rem;
     padding: 1.8rem 0;
   }
-  .main-container .main-content .profile-container .profile-details .details .profile-detail {
-    gap: 0.1rem;
-  }
-  .main-container .main-content .profile-container .profile-details .details .profile-detail .detail-title {
+  .main-container .main-content .item-container .item-details .details .item-detail .detail-title {
     width: 80px;
   }
   .home-container .header-container .header .header-title {
@@ -1045,7 +1086,7 @@ footer .tag {
   .overlay .new-group-container {
     left: 60%;
   }
-  .main-container .main-content .profile-container .profile-details .details {
+  .main-container .main-content .item-container .item-details .details {
     display: flex;
     flex-direction: column;
   }
@@ -1105,20 +1146,20 @@ footer .tag {
   }
 }
 @media screen and (max-width: 350px) {
-  .main-container .main-content .profile-container .profile-details .title-holder {
+  .main-container .main-content .item-container .item-details .title-holder {
     flex-direction: column;
     gap: 0.8rem;
   }
-  .main-container .main-content .profile-container .profile-details .title-holder .title {
+  .main-container .main-content .item-container .item-details .title-holder .title {
     font-size: 1.2rem;
   }
-  .main-container .main-content .profile-container .profile-details .title-holder .role {
+  .main-container .main-content .item-container .item-details .title-holder .role {
     font-size: 1rem;
   }
-  .main-container .main-content .profile-container .profile-details .details {
+  .main-container .main-content .item-container .item-details .details {
     padding: 1rem 0;
   }
-  .main-container .main-content .profile-container .profile-details .details .profile-detail {
+  .main-container .main-content .item-container .item-details .details .item-detail {
     flex-direction: column;
   }
   .home-container .header-container .header .header-title {
