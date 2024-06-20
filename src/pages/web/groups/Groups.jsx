@@ -6,7 +6,6 @@ import CreateGroup from "./CreateGroup";
 const Groups = () => {
   const { data: groupsCollection, loading: groupsCollectionLoading  } = useCollection("groups");
   const [showModal, setShowModal] = useState(false);
-  console.log(groupsCollection);
   
   if(groupsCollectionLoading) return <div>Loading...</div>
 

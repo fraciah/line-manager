@@ -708,6 +708,9 @@ footer .tag {
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
+.main-container .main-content .page-container .header .user-header-title .view-task:hover {
+  text-decoration: underline;
+}
 .main-container .main-content .page-container .header .user-header-title div {
   display: flex;
   align-items: center;

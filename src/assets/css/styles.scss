@@ -852,6 +852,12 @@ footer {
           gap: 0.5rem;
           margin-bottom: 1rem;
 
+          .view-task {
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
           div {
             display: flex;
             align-items: center;

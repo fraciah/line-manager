@@ -41,8 +41,8 @@ const TaskView = () => {
                 <span>{task?.groupName}</span>
               </div>
               <div className="item-detail">
-                <span className="detail-title">Added On:</span>
-                <span>{new Date(task?.assignedAt).toDateString()}</span>
+                <span className="detail-title">Status:</span>
+                <span>{task?.status}</span>
               </div>
               <div className="item-detail">
                 <span className="detail-title">Assigned To:</span>
@@ -63,9 +63,15 @@ const TaskView = () => {
                 }
               </div>
               <div className="item-detail">
-                <span className="detail-title">Status:</span>
-                <span>{task?.status}</span>
+                <span className="detail-title">Added On:</span>
+                <span>{new Date(task?.assignedAt).toDateString()}</span>
               </div>
+              {task?.editedOn && 
+                <div className="item-detail">
+                  <span className="detail-title">Edited On:</span>
+                  <span>{new Date(task?.editedOn).toDateString()}</span>
+                </div>
+              }
             </div>
           </div>
         </div>
