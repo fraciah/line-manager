@@ -81,7 +81,6 @@ const AddTask = () => {
         setSelectedUser(user);
         setFilteredUsers([]);
     };
-    // console.log("selectedUser", selectedUser)
 
     const addTask = async (data) => {
         if (!selectedUser) {
@@ -109,6 +108,7 @@ const AddTask = () => {
                 assignedAt: Date.now(),
                 assignedBy: user.uid,
                 groupId: selectedGroup.id,
+                editedOn: null,
                 status: "Not Started",
                 isActive: true,
             });
@@ -122,6 +122,7 @@ const AddTask = () => {
                 assignedAt: Date.now(),
                 assignedBy: user.uid,
                 groupId: selectedGroup.id,
+                editedOn: null,
                 status: "Not Started",
                 isActive: true,
             });
@@ -135,6 +136,7 @@ const AddTask = () => {
                 assignedToName: selectedUser.name,
                 assignedAt: Date.now(),
                 assignedBy: user.uid,
+                editedOn: null,
                 status: "Not Started",
                 isActive: true,
             });
@@ -188,6 +190,7 @@ const AddTask = () => {
                     })} 
                         className="task-input" 
                         placeholder="Enter a task description"
+                        rows="5"
                     />
                 </div>
                 <div className="form-group">

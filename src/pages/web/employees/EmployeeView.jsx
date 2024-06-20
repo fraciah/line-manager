@@ -45,8 +45,12 @@ const EmployeeView = () => {
             },
         },
         {
-            name: "Created At",
+            name: "Added On",
             selector: (row) => new Date(row.assignedAt).toDateString(),
+        },
+        {
+            name: "Edited On",
+            selector: (row) => row.editedOn ? new Date(row.editedOn).toDateString() : "-",
         },
         {
             name: "Group",
