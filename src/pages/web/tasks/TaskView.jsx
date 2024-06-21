@@ -1,22 +1,74 @@
 import useAuth from "../../../hooks/useAuth";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import { ChevronRight } from "lucide-react";
+import { useState } from "react";
+import DeleteModal from "./DeleteModal";
+import useCollection from "../../../hooks/useCollection";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 const TaskView = () => {
   const { user } = useAuth();
   const urlParams = useParams();
+  const navigate = useNavigate();
+  const { data: allTasksCollection, loading: allTasksCollectionLoading } = useCollection("allTasks");
   const { document: task, loading: taskLoading } = useFireStoreDoc("allTasks", urlParams?.id);
   const { document: manager, loading: managerLoading } = useFireStoreDoc("managers", task?.assignedBy);
   const { document: currentUser, loading: currentUserLoading } = useFireStoreDoc("users", user?.uid);
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const taskExistsInAllTask = allTasksCollection && allTasksCollection?.find(task => task.id === urlParams?.id);
 
+  const deleteTask = async() => {
+    try{
+      setLoading(true);
+      //delete task from tasks subcollection of employees collection
+      const taskSubRef = doc(db, "employees", user?.uid, "tasks", urlParams?.id);
+      await deleteDoc(taskSubRef);
+      setLoading(false);
+      navigate("/tasks");
+      alert("Task cleared successfully");
+    }
+    catch(error){
+      setError(error.message);
+    }
+  };
+
+  //if task is deleted from allTasks collection
+  if((taskExistsInAllTask === undefined)){
+    return (
+      <div className="page-container">
+        {error && <div className="error-message">{error}</div>}
+        <div className="task-deleted">
+          <div>This task was deleted</div>
+          {currentUser?.role === "Employee" &&
+            <button
+              className="btn" 
+              onClick={deleteTask}>
+              {loading ? "Clearing..." : "Clear from your tasks"}
+            </button>
+          }
+        </div>
+      </div>
+    )
+  }
+   
   if(taskLoading || 
     managerLoading ||
-    currentUserLoading
+    currentUserLoading ||
+    allTasksCollectionLoading
   ) return <div>Loading...</div>;
+
   
   return (
     <div className="page-container">
+      {showModal && <DeleteModal 
+                        setShowModal={setShowModal} 
+                        taskIdParams={urlParams?.id}
+                        groupId={task?.groupId}
+                    />}
       <div className="header">
         <div className="user-header-title">
           <div>
@@ -84,7 +136,7 @@ const TaskView = () => {
               >Edit</Link>
               <button 
                 className="task-btn del"
-                title="Under development"
+                onClick={() => setShowModal(true)}
               >Delete</button>
             </>
           ) : currentUser?.role === "Manager" ? (

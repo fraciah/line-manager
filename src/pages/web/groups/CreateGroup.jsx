@@ -31,7 +31,7 @@ const CreateGroup = ({setShowModal}) => {
 
   return (
     <div className="overlay">
-        <div className="new-group-container">
+        <div className="modal-container">
             <X 
                 className="close-btn"
                 onClick={() => setShowModal(false)}

@@ -26,6 +26,7 @@ const AddTask = () => {
     const [searchUser, setSearchUser] = useState("");
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const { data : groupMembers, loading: groupMembersLoading } = useSubCollection("groups", selectedGroup?.id, "groupMembers");
     console.log("managersCollection", managersCollection)
 
@@ -93,7 +94,7 @@ const AddTask = () => {
             setError("Managers cannot be assigned tasks");
             return;
         }
-
+        setLoading(true);
         try{
             //add new task to allTasks collection and respective employee and group tasks subcollections
             const taskRef = doc(collection(db, "allTasks"));
@@ -101,6 +102,7 @@ const AddTask = () => {
 
             const taskEmployeeSubCollection = doc(db, "employees", selectedUser.groupMemberId, "tasks", taskId);
             await setDoc(taskEmployeeSubCollection, {
+                groupName: selectedGroup.name,
                 taskTitle: data.taskTitle,      
                 taskDesc: data.taskDesc,
                 assignedTo: selectedUser.groupMemberId,
@@ -140,7 +142,7 @@ const AddTask = () => {
                 status: "Not Started",
                 isActive: true,
             });
-            
+            setLoading(false);
             setError("");
             alert("Task details added successfully!");
             navigate("/tasks")
@@ -257,7 +259,7 @@ const AddTask = () => {
                     />
                 </div> */}
                 {groupMembers.length > 0 ?
-                    <button className="btn assign">Assign</button>
+                    <button className="btn assign">{loading? "Assigning..." : "Assign"}</button>
                     :
                     <button disabled className="disabled">Assign</button>
                 }

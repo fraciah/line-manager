@@ -357,7 +357,7 @@ footer .tag {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
-.overlay .new-group-container {
+.overlay .modal-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -373,33 +373,39 @@ footer .tag {
   transform: translate(-50%, -50%);
   z-index: 2;
 }
-.overlay .new-group-container .close-btn {
+.overlay .modal-container .close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
 }
-.overlay .new-group-container .title {
+.overlay .modal-container .title {
   text-align: center;
   font-weight: 600;
   color: #8e3b46;
+  font-size: 1.5rem;
 }
-.overlay .new-group-container form {
+.overlay .modal-container .actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.overlay .modal-container form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-.overlay .new-group-container form .form-group .create-input {
+.overlay .modal-container form .form-group .create-input {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid rgba(0, 0, 0, 0.2509803922);
   border-radius: 0.3rem;
 }
-.overlay .new-group-container form .form-group .create-input:focus {
+.overlay .modal-container form .form-group .create-input:focus {
   outline: none;
   border-color: #1e1e1f;
 }
-.overlay .new-group-container form .create {
+.overlay .modal-container form .create {
   width: 100%;
 }
 
@@ -573,6 +579,12 @@ footer .tag {
   background: white;
   padding: 1rem;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1882352941);
+}
+.main-container .main-content .page-container .task-deleted {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 .main-container .main-content .page-container .task-info {
   display: flex;
@@ -952,7 +964,7 @@ footer .tag {
 }
 
 @media screen and (max-width: 1000px) {
-  .overlay .new-group-container {
+  .overlay .modal-container {
     width: 60%;
     height: 30%;
     left: 55%;
@@ -1086,7 +1098,7 @@ footer .tag {
     padding: 0.6rem 0.9rem;
     font-size: 0.9rem;
   }
-  .overlay .new-group-container {
+  .overlay .modal-container {
     left: 60%;
   }
   .main-container .main-content .item-container .item-details .details {
