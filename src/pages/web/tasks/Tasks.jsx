@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import useCollection from "../../../hooks/useCollection";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import Table from "../../../components/Table";
+import useSubCollection from "../../../hooks/useSubCollection";
 
 const Tasks = () => {
   const { user } = useAuth();
@@ -11,18 +12,20 @@ const Tasks = () => {
   const { document: userDoc, loading: userDocLoading } = useFireStoreDoc("users", user?.uid);
   const { data: usersCollection, loading: usersCollectionLoading } = useCollection("users");
   const { data: tasksCollection, loading: tasksCollectionLoading } = useCollection("allTasks");
+  const { data: employeeTasks, loading: employeeTasksLoading } = useSubCollection("employees", user?.uid, "tasks");
 
   let notStartedTasks, completedTasks;
 
   if (tasksCollection) {
     if (userDoc?.role === "Employee") {
-      //filtering tasks with current user's id(for employees)
-      notStartedTasks = tasksCollection.filter(task => task.status === "Not Started" && task.assignedTo === user?.uid);
-      completedTasks = tasksCollection.filter(task => task.status === "Done" && task.assignedTo === user?.uid);
+      //filtering tasks for employee
+      notStartedTasks = employeeTasks && employeeTasks.filter(task => task.status === "Not Started");
+      completedTasks = employeeTasks && employeeTasks.filter(task => task.status === "Done");
     }
+    //filtering tasks for manager, admin
     else {
-      notStartedTasks = tasksCollection.filter(task => task.status === "Not Started");
-      completedTasks = tasksCollection.filter(task => task.status === "Done");
+      notStartedTasks = tasksCollection && tasksCollection.filter(task => task.status === "Not Started");
+      completedTasks = tasksCollection && tasksCollection.filter(task => task.status === "Done");
     }
   };
 
@@ -71,7 +74,11 @@ const Tasks = () => {
     navigate(`/tasks/${row.id}/view`);
   };
 
-  if (userDocLoading || usersCollectionLoading || tasksCollectionLoading) return <div>Loading...</div>;
+  if (userDocLoading || 
+    usersCollectionLoading || 
+    tasksCollectionLoading ||
+    employeeTasksLoading
+  ) return <div>Loading...</div>;
 
   return (
     <div className="page-container">

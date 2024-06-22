@@ -59,10 +59,6 @@ const EmployeeView = () => {
                 return group ? group.name : "Unknown";
             }
         },
-        {
-            name: "Status",
-            selector: (row) => row.status,
-        }
     ];
 
     const taskClicked = (row) => {
