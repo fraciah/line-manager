@@ -25,7 +25,7 @@ function App() {
                             </>
                             } 
               />) : (
-              <Route element={<RequireAuth/>}>
+              <Route element={<RequireAuth allowedRoles={route}/>}>
                 <Route path={route.path} element={<Container page={route}/>} />
               </Route>
             )}

@@ -16,90 +16,117 @@ import GroupView from "../pages/web/groups/GroupView";
 import Error404 from "../pages/errors/Error404";
 import Profile from "../pages/web/Profile";
 import HowItWorks from "../pages/web/HowItWorks";
+import Error403 from "../pages/errors/Error403";
 
 export const routes = [
     {
         path: "/",
         element: Home,
+        roles:["*"],
     },
     {
         path: "/how-it-works",
         element: HowItWorks,
+        roles:["*"],
     },
     {
         path: "/signup",
         element: SignUp,
+        roles:["*"],
     },
     {
         path: "/login",
         element: Login,
+        roles:["*"],
     },
     {
         path: "/profile",
         element: Profile,
+        roles: ["Admin", "Manager", "Employee"],
     },
     {
         path: "/users",
         element: Users,
+        roles: ["Admin"],
     },
     {
         path: "/users/:id/view",
         element: UserView,
+        roles: ["Admin"],
     },
     {
         path: "/managers",
         element: Managers,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "/managers/:id/view",
         element: ManagerView,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "/employees",
         element: Employees,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "/employees/:id/view",
         element: EmployeeView,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "/employees/:id/view/:view",
         element: EmployeeView,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "/tasks",
         element: Tasks,
+        roles: ["Admin", "Manager", "Employee"],
     },
     {
         path: "/tasks/addTask",
         element: AddTask,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "/tasks/:taskStatus",
         element: Tasks,
+        roles: ["Admin", "Manager", "Employee"],
     },
     {
         path: "/tasks/:id/view",
         element: TaskView,
+        roles: ["Admin", "Manager", "Employee"],
     },
     {
         path: "/tasks/:id/edit",
         element: EditTask,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "/groups",
         element: Groups,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "/groups/:id/view",
         element: GroupView,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "/groups/:id/view/:view",
         element: GroupView,
+        roles: ["Admin", "Manager"],
     },
     {
         path: "*",
         element: Error404,
+        roles:["*"],
+    },
+    {
+        path: "/unauthorized",
+        element: Error403,
+        roles:["*"],
     },
 ];
