@@ -15,7 +15,7 @@ const Tasks = () => {
   const { data: tasksCollection, loading: tasksCollectionLoading } = useCollection("allTasks");
   const { data: employeeTasks, loading: employeeTasksLoading } = useSubCollection("employees", user?.uid, "tasks");
 
-  let notStartedTasks, inProgressTasks, completedTasks;
+  let notStartedTasks, inProgressTasks, completedTasks, assignedByMeTasks;
 
   if (tasksCollection) {
     if (userDoc?.role === "Employee") {
@@ -28,6 +28,7 @@ const Tasks = () => {
       notStartedTasks = tasksCollection && tasksCollection.filter(task => task.status === "Not Started");
       inProgressTasks = tasksCollection && tasksCollection.filter(task => task.status === "In Progress");
       completedTasks = tasksCollection && tasksCollection.filter(task => task.status === "Completed");
+      assignedByMeTasks = tasksCollection && tasksCollection.filter(task => task.assignedBy === user?.uid);
     }
   };
 
@@ -63,6 +64,40 @@ const Tasks = () => {
       selector: (row) => row.groupName,
     },
   ];
+
+  const allTaskColumns = [
+    {
+      name: "Task Name",
+      selector: (row) => row.taskTitle,
+    },
+    {
+      name: "Created By",
+      selector: (row) => {
+        const manager = usersCollection?.find(user => user.id === row.assignedBy);
+        return manager?.name ? manager.name : "Admin";
+      },
+    },
+    {
+      name: "Created On",
+      selector: (row) => new Date(row.assignedAt).toDateString(),
+    },
+    {
+      name: "Completed On",
+      selector: (row) => row.completedOn ? new Date(row.completedOn).toDateString() : "-",
+    },
+    {
+      name: "Status",
+      selector: (row) => row.status,
+    },
+    // {
+    //   name: "Assigned To",
+    //   selector: (row) => {
+    //     const user = usersCollection?.find(user => user.id === row.assignedTo);
+    //     return user ? user.name : "Unknown";
+    //   },
+    // },
+  ];
+
   if (userDoc?.role === "Manager" || userDoc?.role === "Admin") {
     taskColumns.push({
       name: "Assigned To",
@@ -94,14 +129,20 @@ const Tasks = () => {
         )}
       </div>
       <div className="page-content">
-        <div>An overview of all tasks</div>
+        <div>Overview of tasks</div>
         {(userDoc?.role === "Manager" || userDoc?.role === "Admin") && (
           <>
           <div className="inner-navs">
             <div className="card-navs-holder">
               <NavLink 
-                to="/tasks/notStarted"
+                to="/tasks/allTasks"
                 className={`card-nav ${urlParams?.taskStatus === undefined ? "active" : ""}`}
+              >
+                All Tasks
+              </NavLink>
+              <NavLink 
+                to="/tasks/notStarted"
+                className="card-nav"
               >
                 Not Started
               </NavLink>
@@ -117,9 +158,22 @@ const Tasks = () => {
               >
                 Completed
               </NavLink>
+              <NavLink 
+                to="/tasks/assignedByMe"
+                className="card-nav"
+              >
+                Assigned by me
+              </NavLink>
             </div>
           </div>
-          {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "notStarted") && (
+          {(urlParams?.taskStatus === undefined || urlParams?.taskStatus === "allTasks") && (
+            <Table 
+              columns={allTaskColumns} 
+              data={tasksCollection}
+              onRowClicked={taskClicked}
+            />
+          )}
+          {urlParams?.taskStatus === "notStarted" && (
             <Table 
               columns={taskColumns} 
               data={notStartedTasks}
@@ -137,6 +191,13 @@ const Tasks = () => {
             <Table 
               columns={taskColumns} 
               data={completedTasks}
+              onRowClicked={taskClicked}
+            />
+          )}
+          {urlParams?.taskStatus === "assignedByMe" && (
+            <Table 
+              columns={allTaskColumns} 
+              data={assignedByMeTasks}
               onRowClicked={taskClicked}
             />
           )}
