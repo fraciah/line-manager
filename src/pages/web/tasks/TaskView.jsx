@@ -7,6 +7,7 @@ import DeleteModal from "./DeleteModal";
 import useCollection from "../../../hooks/useCollection";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import Loading from "../../../components/Loading";
 
 const TaskView = () => {
   const { user } = useAuth();
@@ -55,14 +56,13 @@ const TaskView = () => {
     )
   }
    
-  if(taskLoading || 
-    managerLoading ||
-    currentUserLoading ||
-    allTasksCollectionLoading
-  ) return <div>Loading...</div>;
-
-  
   return (
+    <>
+    <Loading isLoading={taskLoading || 
+                        managerLoading || 
+                        currentUserLoading ||
+                        allTasksCollectionLoading}
+    />
     <div className="page-container">
       {showModal && <DeleteModal 
                         setShowModal={setShowModal} 
@@ -161,6 +161,7 @@ const TaskView = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

@@ -2,14 +2,15 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import useCollection from "../../../hooks/useCollection";
 import CreateGroup from "./CreateGroup";
+import Loading from "../../../components/Loading";
 
 const Groups = () => {
   const { data: groupsCollection, loading: groupsCollectionLoading  } = useCollection("groups");
   const [showModal, setShowModal] = useState(false);
   
-  if(groupsCollectionLoading) return <div>Loading...</div>
-
   return (
+    <>
+    <Loading isLoading={groupsCollectionLoading}/>
     <div className="page-container">
       <div className="header">
         <Link to="/users" className="page-title">Groups</Link>
@@ -22,21 +23,26 @@ const Groups = () => {
       
       <div className="page-content">
         <div className="group-container">
-          {groupsCollection.map(group => (
+          {groupsCollection?.length === 0 ? (
+            <div>No groups found.</div>
+          ) : 
+          groupsCollection?.map(group => (
             <Link 
               key={group.id} 
               className="group-item"
-              to={`/groups/${group.id}/view`}
+              to={`/groups/${group?.id}/view`}
             >
               <div 
                 className="group-name"
-              >{group.name}</div>
-              <div>Created on {new Date(group.createdAt).toDateString()}</div>
+              >{group?.name}</div>
+              <div>Created on {new Date(group?.createdAt).toDateString()}</div>
             </Link>
-          ))}
+          ))
+          }
         </div>
       </div>  
     </div>
+    </>
   )
 }
 

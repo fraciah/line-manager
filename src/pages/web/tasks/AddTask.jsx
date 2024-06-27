@@ -28,7 +28,6 @@ const AddTask = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const { data : groupMembers, loading: groupMembersLoading } = useSubCollection("groups", selectedGroup?.id, "groupMembers");
-    console.log("managersCollection", managersCollection)
 
     useEffect(() => {
         if(groupsCollection){
@@ -64,7 +63,6 @@ const AddTask = () => {
         const searchGroup = getValues("searchGroup");
         setSearchGroup(searchGroup);
     };
-
 
     const selectGroup = (group) => {
         setValue("searchGroup", group.name);

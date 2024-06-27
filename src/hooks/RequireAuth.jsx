@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import useFireStoreDoc from "./useFireStoreDoc";
+import Loading from "../components/Loading";
 
 const RequireAuth = ({ allowedRoles }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -12,7 +13,7 @@ const RequireAuth = ({ allowedRoles }) => {
       return <Navigate to="/login" state={{ from: location }} replace/>
   }
 
-  if(currentUserLoading) return <div className="page-container">Loading...</div>;
+  if(currentUserLoading) return <div className="page-container"><Loading isLoading={currentUserLoading}/></div>;
 
   //if user is authenticated and has allowed role
   if(allowedRoles?.roles?.includes("*") || allowedRoles?.roles?.includes(currentUser?.role)) {

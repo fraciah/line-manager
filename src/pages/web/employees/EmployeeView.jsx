@@ -4,11 +4,15 @@ import useSubCollection from "../../../hooks/useSubCollection";
 import useCollection from "../../../hooks/useCollection";
 import Table from "../../../components/Table";
 import { ChevronRight } from "lucide-react";
+import useAuth from "../../../hooks/useAuth";
+import Loading from "../../../components/Loading";
 
 const EmployeeView = () => {
+    const { user } = useAuth();
     const navigate = useNavigate();
     const urlParams = useParams();
     const { id } = urlParams;
+    const { document: userDoc, loading: userDocLoading } = useFireStoreDoc("users", user?.uid);
     const { data: managersCollection, loading: managersCollectionLoading } = useCollection("managers");
     const { document: employeeDoc, loading: employeeDocLoading } = useFireStoreDoc("employees", id);
     const { data: groupsSubCollection, loading: groupsSubCollectionLoading } = useSubCollection("employees", id, "memberGroups");
@@ -65,13 +69,14 @@ const EmployeeView = () => {
         navigate(`/tasks/${row.id}/view`);
     };
 
-    if(employeeDocLoading || 
-        managersCollectionLoading || 
-        groupsSubCollectionLoading ||
-        tasksSubCollectionLoading
-    ) return <div>Loading...</div>
-
   return (
+    <>
+    <Loading isLoading={employeeDocLoading ||
+                        managersCollectionLoading || 
+                        groupsSubCollectionLoading || 
+                        tasksSubCollectionLoading || 
+                        userDocLoading} 
+    />
     <div className="page-container">
         <div className="header">
             <div className="user-header-title">
@@ -140,7 +145,14 @@ const EmployeeView = () => {
                         <span>Last Login</span>
                         <div className="user-detail">NA</div>
                     </div>
-                </div>      
+                    {userDoc?.role === "Admin" &&
+                        <div className="user-details">
+                        <span>Is Active</span>
+                        <div className="user-detail">{employeeDoc?.isActive? "Yes" : "No"}</div>
+                    </div>
+                    }
+                </div>    
+                <button className="btn">Remove employee</button>  
             </div>
         </div>
         <div className="inner-navs">
@@ -173,6 +185,7 @@ const EmployeeView = () => {
             />
         )}
     </div>
+    </>
   )
 }
 

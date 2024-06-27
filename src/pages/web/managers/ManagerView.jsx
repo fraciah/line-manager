@@ -1,14 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import { ChevronRight } from "lucide-react";
+import Loading from "../../../components/Loading";
 
 const ManagerView = () => {
     const { id } = useParams();
     const { document: managerDoc, loading: managerDocLoading } = useFireStoreDoc("managers", id);
 
-    if(managerDocLoading) return <div>Loading...</div>
-
   return (
+    <>
+    <Loading isLoading={managerDocLoading}/>
     <div className="page-container">
         <div className="header">
             <div className="user-header-title">
@@ -83,6 +84,7 @@ const ManagerView = () => {
             </div>
         </div>
     </div>
+    </>
   )
 }
 

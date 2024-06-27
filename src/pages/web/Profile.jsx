@@ -1,13 +1,14 @@
 import useAuth from "../../hooks/useAuth";
 import useFireStoreDoc from "../../hooks/useFireStoreDoc";
+import Loading from "../../components/Loading";
 
 const Profile = () => {
   const { user } = useAuth();
   const { document: currentUser, loading: currentUserLoading } = useFireStoreDoc("users", user?.uid);
-
-  if(currentUserLoading) return <div>Loading...</div>;
   
   return (
+    <>
+    <Loading isLoading={currentUserLoading}/>
     <div className="item-container">  
       <div className="page-container">  
         <div className="item-details"> 
@@ -66,6 +67,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

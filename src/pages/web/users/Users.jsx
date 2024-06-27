@@ -4,6 +4,7 @@ import useCollection from "../../../hooks/useCollection";
 import fetchAndSyncUsers from "../../../utilities/fetchAndSyncUsers";
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
+import Loading from "../../../components/Loading";
 // import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 
 const Users = () => {
@@ -46,11 +47,9 @@ const Users = () => {
       },
     ];
 
-    if (usersLoading) {
-        return <div>Loading...</div>; 
-    }
-
     return (
+      <>
+      <Loading isLoading={usersLoading}/>
         <div className="page-container">
             <div className="header">
                 <Link to="/users" className="page-title">Users</Link>
@@ -63,6 +62,7 @@ const Users = () => {
               />
             </div>
         </div>
+      </>
     )
 }
 

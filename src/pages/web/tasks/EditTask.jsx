@@ -5,6 +5,7 @@ import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import { ChevronRight } from "lucide-react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import Loading from "../../../components/Loading";
 
 const EditTask = () => {
   const urlParams = useParams();
@@ -56,10 +57,10 @@ const EditTask = () => {
       setError(error.message)
     }
   };
-
-  if(taskLoading) return <div>Loading...</div>
   
   return (
+    <>
+    <Loading isLoading={taskLoading}/>
     <div className="page-container">
       <div className="header">
         <div className="user-header-title">
@@ -120,6 +121,7 @@ const EditTask = () => {
         </form>
       </div>
     </div> 
+    </>
   )
 }
 

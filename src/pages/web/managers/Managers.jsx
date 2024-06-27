@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import Table from "../../../components/Table";
 import useCollection from "../../../hooks/useCollection";
+import Loading from "../../../components/Loading";
 
 const Managers = () => {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ const Managers = () => {
   ];
 
   return (
+    <>
+    <Loading isLoading={managersCollectionLoading}/>
     <div className="page-container">
       <div className="header">
         <Link to="/managers" className="page-title">Managers</Link>
@@ -38,6 +41,7 @@ const Managers = () => {
         />
       </div>
     </div>
+    </>
   )
 }
 

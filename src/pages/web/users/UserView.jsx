@@ -5,6 +5,7 @@ import { db } from '../../../firebase';
 import { deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { ChevronRight, Users } from "lucide-react";
 import useCollection from "../../../hooks/useCollection";
+import Loading from "../../../components/Loading";
 
 const UserView = () => {
   const { id } = useParams();
@@ -13,6 +14,7 @@ const UserView = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const userHasTasks = allTasks && allTasks.some(task => task.assignedTo === id);
+
   const makeManager = async () => {
     setLoading(true);
     try {
@@ -43,9 +45,9 @@ const UserView = () => {
     }
   };
 
-  if(userDocLoading|| allTasksLoading) return <div>Loading...</div>
-
   return (
+    <>
+    <Loading isLoading={userDocLoading || allTasksLoading}/>
     <div className="page-container">
       <div className="header">
         {error && <div className="error-message">{error}</div>}
@@ -127,6 +129,7 @@ const UserView = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

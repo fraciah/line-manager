@@ -9,6 +9,7 @@ import useCollection from "../../../hooks/useCollection";
 import useSubCollection from "../../../hooks/useSubCollection";
 import Table from "../../../components/Table";
 import { ChevronRight, Watch } from "lucide-react";
+import Loading from "../../../components/Loading";
 
 const GroupView = () => {
     const { user } = useAuth();
@@ -162,14 +163,14 @@ const GroupView = () => {
         navigate(`/tasks/${row.id}/view`);
     };
 
-    if(groupDocLoading ||
-        employeesCollectionLoading ||
-        usersCollectionLoading ||
-        groupMembersLoading ||
-        groupTasksLoading
-    ) return <div>Loading...</div>
-
   return (
+    <>
+    <Loading isLoading={groupDocLoading || 
+                        employeesCollectionLoading || 
+                        usersCollectionLoading || 
+                        groupMembersLoading || 
+                        groupTasksLoading} 
+    />
     <div className="page-container">
         <div className="header">
             <div className="user-header-title">
@@ -240,6 +241,7 @@ const GroupView = () => {
             />
         )}
     </div>
+    </>
   )
 }
 

@@ -4,6 +4,7 @@ import useCollection from "../../../hooks/useCollection";
 import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import Table from "../../../components/Table";
 import useSubCollection from "../../../hooks/useSubCollection";
+import Loading from "../../../components/Loading";
 
 const Tasks = () => {
   const { user } = useAuth();
@@ -74,13 +75,13 @@ const Tasks = () => {
     navigate(`/tasks/${row.id}/view`);
   };
 
-  if (userDocLoading || 
-    usersCollectionLoading || 
-    tasksCollectionLoading ||
-    employeeTasksLoading
-  ) return <div>Loading...</div>;
-
   return (
+    <>
+    <Loading isLoading={userDocLoading || 
+                        usersCollectionLoading || 
+                        tasksCollectionLoading || 
+                        employeeTasksLoading} 
+    />
     <div className="page-container">
       <div className="header">
         <Link to="/tasks" className="page-title">Tasks</Link>
@@ -169,6 +170,7 @@ const Tasks = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
