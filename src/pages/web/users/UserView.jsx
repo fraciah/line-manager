@@ -13,7 +13,8 @@ const UserView = () => {
   const { data: allTasks, loading: allTasksLoading } = useCollection("allTasks");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const userHasTasks = allTasks && allTasks.some(task => task.assignedTo === id);
+  const userHasTasks = allTasks && allTasks.some(task => task.assignedTo === id && task.status !== "Completed");
+  // console.log(userHasTasks);
 
   const makeManager = async () => {
     setLoading(true);

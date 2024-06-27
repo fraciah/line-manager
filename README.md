@@ -8,9 +8,9 @@ A web based application designed to help an organization manage their department
 3. Add and manage employees within these groups.
 4. Assign tasks to employees.
 5. Create, edit and delete tasks.
-6. Under development: Move employees between departments.
-7. Under development: Remove employees from the organization.
-8. Under development: Mark tasks as done or in progress.
+6. Mark tasks as done or in progress.
+7. Under development: Move employees between departments.
+8. Under development: Remove employees from the organization.
 9. Under development: Passsword Reset.
 
 ### Technologies Used

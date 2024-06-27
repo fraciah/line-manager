@@ -44,9 +44,13 @@ const EmployeeView = () => {
         {
             name: "Created By",
             selector: (row) => {
-                const manager = managersCollection.find(manager => manager.id === row.assignedBy);
+                const manager = managersCollection && managersCollection?.find(manager => manager.id === row.assignedBy);
                 return manager?.name ? manager.name : "Admin";
             },
+        },
+        {
+            name: "Status",
+            selector: (row) => row.status,
         },
         {
             name: "Added On",
@@ -59,7 +63,7 @@ const EmployeeView = () => {
         {
             name: "Group",
             selector: (row) => {
-                const group = groupsSubCollection.find(group => group.id === row.groupId);
+                const group = groupsSubCollection && groupsSubCollection?.find(group => group.id === row.groupId);
                 return group ? group.name : "Unknown";
             }
         },

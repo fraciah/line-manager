@@ -27,7 +27,7 @@ const Tasks = () => {
     else {
       notStartedTasks = tasksCollection && tasksCollection.filter(task => task.status === "Not Started");
       inProgressTasks = tasksCollection && tasksCollection.filter(task => task.status === "In Progress");
-      completedTasks = tasksCollection && tasksCollection.filter(task => task.status === "Done");
+      completedTasks = tasksCollection && tasksCollection.filter(task => task.status === "Completed");
     }
   };
 
@@ -137,6 +137,7 @@ const Tasks = () => {
             <Table 
               columns={taskColumns} 
               data={completedTasks}
+              onRowClicked={taskClicked}
             />
           )}
           </>

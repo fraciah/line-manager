@@ -4,6 +4,7 @@ import useFireStoreDoc from "../../../hooks/useFireStoreDoc";
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import DeleteModal from "./DeleteModal";
+import CompleteTask from "./CompleteTask";
 import useCollection from "../../../hooks/useCollection";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
@@ -18,6 +19,7 @@ const TaskView = () => {
   const { document: manager, loading: managerLoading } = useFireStoreDoc("managers", task?.assignedBy);
   const { document: currentUser, loading: currentUserLoading } = useFireStoreDoc("users", user?.uid);
   const [showModal, setShowModal] = useState(false);
+  const [showComplete, setShowComplete] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const taskExistsInAllTask = allTasksCollection && allTasksCollection?.find(task => task.id === urlParams?.id);
@@ -151,20 +153,35 @@ const TaskView = () => {
                   <span>{new Date(task?.editedOn).toDateString()}</span>
                 </div>
               }
+              {
+                task?.completedOn &&
+                <div className="item-detail">
+                  <span className="detail-title">Completed On:</span>
+                  <span>{new Date(task?.completedOn).toDateString()}</span>
+                </div>
+              }
             </div>
           </div>
         </div>
         <div className="actions">
           {(currentUser?.role === "Admin" || currentUser?.id === task?.assignedBy) ? (
             <>
-              <Link 
-                to={`/tasks/${task.id}/edit`}
-                className="task-btn edit"
-              >Edit</Link>
               <button 
-                className="task-btn del"
+                onClick={() => navigate(`/tasks/${task.id}/edit`)}
+                className={`task-btn ${task?.status === "Completed" ? "disabled" : "edit"}`}
+                title={task?.status === "Completed" && "Completed task cannot be edited"}
+                disabled={task?.status === "Completed"}
+              >
+                Edit
+              </button>
+              <button 
                 onClick={() => setShowModal(true)}
-              >Delete</button>
+                className={`task-btn ${task?.status === "Completed" ? "disabled" : "del"}`}
+                title={task?.status === "Completed" && "Completed task cannot be deleted"}
+                disabled={task?.status === "Completed"}
+              >
+                Delete
+              </button>
             </>
           ) : currentUser?.role === "Manager" ? (
               <>
@@ -182,15 +199,22 @@ const TaskView = () => {
             ) : task?.status === "Not Started" ? (
               <button 
                 className="task-btn btn"
-                title="Under development"
                 onClick={handleProgress}
               >{loading ? "Marking..." : "Mark as In Progress"}
               </button>
             ): (
+              <>
+              {showComplete && 
+              <CompleteTask 
+                setShowComplete={setShowComplete}
+                taskIdParams={urlParams?.id}
+                task={task}
+              />}
               <button 
                 className="task-btn btn"
-                title="Under development"
-              >Mark as Done</button>
+                onClick={() => setShowComplete(true)}
+              >Mark as Completed</button>
+              </>
             )
             }
         </div>
