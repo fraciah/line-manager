@@ -105,19 +105,19 @@ const GroupView = () => {
         {
             name: "Role",
             selector: (row) => {
-                const user = usersCollection.find(user => user.id === row.groupMemberId);
+                const user = usersCollection && usersCollection?.find(user => user.id === row.groupMemberId);
                 return user ? user.role : "Unknown";
             },
         },
         {
-            name: "Added By (Manager ID)",
+            name: "Added By (ID)",
             selector: (row) => row.addedBy,
         },
         {
-            name : "Added By (Manager Name)",
+            name : "Added By",
             selector: (row) => {
-                const manager = usersCollection.find(user => user.id === row.addedBy);
-                return manager ? manager.name : "Unknown";
+                const manager = usersCollection && usersCollection?.find(user => user.id === row.addedBy);
+                return manager?.name ? manager.name : "Admin";
             }
         }
     ];
@@ -150,7 +150,7 @@ const GroupView = () => {
             name : "Assigned By",
             selector: (row) => {
                 const manager = usersCollection.find(user => user.id === row.assignedBy);
-                return manager ? manager.name : "Unknown";
+                return manager?.name ? manager?.name : "Admin";
             }
         },
         {

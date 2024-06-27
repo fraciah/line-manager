@@ -30,8 +30,8 @@ const EmployeeView = () => {
         {
             name: "Added By",
             selector: (row) => {
-                const manager = managersCollection.find(manager => manager.id === row.addedBy);
-                return manager ? manager.name : "Unknown";
+                const manager = managersCollection && managersCollection?.find(manager => manager?.id === row?.addedBy);
+                return manager?.name ? manager?.name : "Admin";
             },
         }
     ];
@@ -42,10 +42,10 @@ const EmployeeView = () => {
             selector: (row) => row.taskTitle,
         },
         {
-            name: "Created By (Manager)",
+            name: "Created By",
             selector: (row) => {
                 const manager = managersCollection.find(manager => manager.id === row.assignedBy);
-                return manager ? manager.name : "Unknown";
+                return manager?.name ? manager.name : "Admin";
             },
         },
         {
@@ -152,7 +152,7 @@ const EmployeeView = () => {
                     </div>
                     }
                 </div>    
-                <button className="btn">Remove employee</button>  
+                {/* <button className="btn">Remove employee</button>   */}
             </div>
         </div>
         <div className="inner-navs">

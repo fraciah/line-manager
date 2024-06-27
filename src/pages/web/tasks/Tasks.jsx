@@ -15,17 +15,18 @@ const Tasks = () => {
   const { data: tasksCollection, loading: tasksCollectionLoading } = useCollection("allTasks");
   const { data: employeeTasks, loading: employeeTasksLoading } = useSubCollection("employees", user?.uid, "tasks");
 
-  let notStartedTasks, completedTasks;
+  let notStartedTasks, inProgressTasks, completedTasks;
 
   if (tasksCollection) {
     if (userDoc?.role === "Employee") {
       //filtering tasks for employee
       notStartedTasks = employeeTasks && employeeTasks.filter(task => task.status === "Not Started");
-      completedTasks = employeeTasks && employeeTasks.filter(task => task.status === "Done");
+      inProgressTasks = employeeTasks && employeeTasks.filter(task => task.status === "In Progress");
     }
     //filtering tasks for manager, admin
     else {
       notStartedTasks = tasksCollection && tasksCollection.filter(task => task.status === "Not Started");
+      inProgressTasks = tasksCollection && tasksCollection.filter(task => task.status === "In Progress");
       completedTasks = tasksCollection && tasksCollection.filter(task => task.status === "Done");
     }
   };
@@ -36,10 +37,10 @@ const Tasks = () => {
       selector: (row) => row.taskTitle,
     },
     {
-      name: "Created By (Manager)",
+      name: "Created By",
       selector: (row) => {
         const manager = usersCollection?.find(user => user.id === row.assignedBy);
-        return manager ? manager.name : "Unknown";
+        return manager?.name ? manager.name : "Admin";
       },
     },
     {
@@ -125,15 +126,16 @@ const Tasks = () => {
               onRowClicked={taskClicked}
             />
           )}
-          {urlParams?.taskStatus === "completed" && (
-            <Table 
-              // columns={taskColumns} 
-              data={completedTasks}
-            />
-          )}
           {urlParams?.taskStatus === "inProgress" && (
             <Table 
-              // columns={taskColumns} 
+              columns={taskColumns} 
+              data={inProgressTasks}
+              onRowClicked={taskClicked}
+            />
+          )}
+          {urlParams?.taskStatus === "completed" && (
+            <Table 
+              columns={taskColumns} 
               data={completedTasks}
             />
           )}
@@ -162,8 +164,9 @@ const Tasks = () => {
           )}
           {urlParams?.taskStatus === "inProgress" && (
             <Table 
-              // columns={taskColumns} 
-              data={completedTasks}
+              columns={taskColumns} 
+              data={inProgressTasks}
+              onRowClicked={taskClicked}
             />
           )}
           </>

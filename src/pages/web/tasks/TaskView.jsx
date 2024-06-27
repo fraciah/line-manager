@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import DeleteModal from "./DeleteModal";
 import useCollection from "../../../hooks/useCollection";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import Loading from "../../../components/Loading";
 
@@ -31,6 +31,33 @@ const TaskView = () => {
       setLoading(false);
       navigate("/tasks");
       alert("Task cleared successfully");
+    }
+    catch(error){
+      setError(error.message);
+    }
+  };
+
+  const handleProgress = async() => {
+    try {
+      setLoading(true);
+      //update task status to "In Progress" in respective collections
+      const taskRef = doc(db, "allTasks", urlParams?.id);
+      await updateDoc(taskRef, {
+        status: "In Progress",
+      });
+
+      const taskEmployeeSubCollection = doc(db, "employees", task?.assignedTo, "tasks", urlParams?.id);
+      await updateDoc(taskEmployeeSubCollection, {
+        status: "In Progress",
+      });
+
+      const taskGroupSubCollection = doc(db, "groups", task?.groupId, "tasks", urlParams?.id);
+      await updateDoc(taskGroupSubCollection, {
+        status: "In Progress",
+      });
+      setLoading(false);
+      alert("Task marked as in progress!");
+      navigate(`/tasks/${urlParams?.id}/view`);
     }
     catch(error){
       setError(error.message);
@@ -109,9 +136,9 @@ const TaskView = () => {
                 <span className="detail-title">Assigned By:</span>
                 {currentUser?.role != "Employee" ?
                   <Link to={`/managers/${task?.assignedBy}/view`}>
-                    {manager?.name ? manager?.name : "Name not provided"}
+                    {manager?.name ? manager?.name : "Admin"}
                   </Link>
-                  : <span>{manager?.name ? manager?.name : "Name not provided"}</span>
+                  : <span>{manager?.name ? manager?.name : "Admin"}</span>
                 }
               </div>
               <div className="item-detail">
@@ -152,12 +179,20 @@ const TaskView = () => {
                   title="Action not allowed. Please contact the respective manager."
                 >Delete</button>
               </>
-            ) : (
+            ) : task?.status === "Not Started" ? (
               <button 
                 className="task-btn btn"
                 title="Under development"
-              >Mark as in Progress</button>
-            )}
+                onClick={handleProgress}
+              >{loading ? "Marking..." : "Mark as In Progress"}
+              </button>
+            ): (
+              <button 
+                className="task-btn btn"
+                title="Under development"
+              >Mark as Done</button>
+            )
+            }
         </div>
       </div>
     </div>
